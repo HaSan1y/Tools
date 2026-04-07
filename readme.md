@@ -51,16 +51,16 @@
 **manifest.json**
 **### Firefox permanent**
 **Developer Edition**
-**about:config**
+**about:config**   |->  about:debugging
 **xpinstall.signatures.required = false**
 
 **## 📁 Structure**
 ├── index.html
 ├── README.md
 │
-├── Browser-Extensions/
+├── @Browser-Extensions/
 │
-├── chall/
+├── +chall/
 
 ## 👨‍💻 Author**
 
