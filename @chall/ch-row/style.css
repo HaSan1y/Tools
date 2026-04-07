@@ -1,0 +1,153 @@
+:root {
+    --sedans-background: hsl(31, 77%, 52%);
+    --suv-background: hsl(184, 100%, 22%);
+    --luxury-background: hsl(179, 100%, 13%);
+    --padding: 1rem;
+    --font-color: #fff;
+    --transp-color: hsla(0, 0%, 100%, 0.75);
+    --background-color: hsl(0, 0%, 95%);
+    --primary-font: "Lexend Deca", sans-serif;
+    --secondary-font: "Big Shoulders Display", sans-serif;
+    --primary-font-weight: 400;
+    --secondary-font-weight: 700;
+    /*
+    emmet:
+    m10e20p
+    margin: 10em 20%;
+    c#3 
+    bd5#0s 
+    border: 5px #000 solid;
+
+    section*3>img:src+b>br+(h3>{Inhalt $})+br+p#steuerung^bq.test[title="Test"]+button{Klick mich}$@3*5 docs.emmet.io
+
+    p*3>lorem3
+    article>(h2>{Inhalt})+p*5
+    li*5>a>{Nummer $} 
+    nav#steuerung>ul#menue>li*3 
+    */
+}
+
+*,
+::after,
+::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.2;
+    text-align: left;
+    overflow: hidden;
+    color: var(--font-color);
+    font-family: Arial, Helvetica, sans-serif;
+
+}
+
+p {
+    color: var(--transp-color);
+
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+}
+
+main {
+    outline: 1px solid black;
+    padding: 120px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); */
+    /* grid-template-rows: repeat(4, auto); */
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+h3 {
+    font-size: 1.4rem;
+    text-transform: uppercase;
+    color: var(--para-color);
+}
+
+img {
+
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+section {
+    display: grid;
+    grid-template-columns: subgrid;
+    grid-column: span 1;
+    padding: var(--padding);
+}
+
+section:nth-child(1) {
+    background-color: var(--sedans-background);
+}
+
+section:nth-child(2) {
+    background-color: var(--suv-background);
+}
+
+section:nth-child(3) {
+    background-color: var(--luxury-background);
+}
+
+section:nth-child(1) button {
+    color: var(--sedans-background);
+}
+
+section:nth-child(2) button {
+    color: var(--suv-background);
+}
+
+section:nth-child(3) button {
+    color: var(--luxury-background);
+}
+
+button {
+    padding: 10px 20px;
+    margin: 100px 0 0 0;
+    border-radius: 50px;
+    transition: 0.1s;
+    background-color: var(--transp-color);
+    text-align: center;
+    align-content: end;
+    font-family: var(--primary-font);
+    font-weight: var(--primary-font-weight);
+}
+
+button:hover {
+    cursor: pointer;
+    color: var(--font-color) !important;
+    background-color: transparent;
+    border: 1px solid var(--para-color);
+    font-family: var(--secondary-font);
+    font-weight: var(--secondary-font-weight);
+}
+
+footer,
+footer a {
+    color: black;
+}
+
+@media screen and (max-width: 800px) {
+
+    main {
+        grid-template-columns: 1fr;
+        padding: var(--padding);
+    }
+
+    section {
+        padding: var(--padding);
+        font-size: 0.8rem;
+        height: 260px;
+    }
+
+    button {
+        margin: 10px 0 0 0;
+    }
+}

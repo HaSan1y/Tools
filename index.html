@@ -184,11 +184,11 @@
       ];
 
       const challengePaths = [
-         "+chall/ch-aapi/",
-         "+chall/ch-form/",
-         "+chall/ch-grid-5/",
-         "+chall/ch-row/",
-         "+chall/cookie-law/"
+         "@chall/ch-aapi/",
+         "@chall/ch-form/",
+         "@chall/ch-grid-5/",
+         "@chall/ch-row/",
+         "@chall/cookie-law/"
       ];
 
       async function loadExtensions() {
@@ -257,7 +257,7 @@
             card.innerHTML = `
                   <div class="card-title">
                      <a href="${path}index.html">${name}</a>
-            </div>
+                  </div>
                   <div class="card-desc">
                      Frontend Mentor Challenge
                   </div>
@@ -272,7 +272,7 @@
       }
 
       async function loadReadme() {
-         const res = await fetch("README.md");
+         const res = await fetch("/readme.md");
          const text = await res.text();
          document.getElementById("readme").textContent = text;
       }

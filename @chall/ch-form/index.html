@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+  <title>Frontend Mentor | Newsletter sign-up form with success message</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- Sign-up form start -->
+  <main>
+    <section>
+      <h1>Stay updated!</h1>
+      <br>
+      <p>Join 60,000+ product managers receiving monthly</p>
+      <p>updates on:</p>
+      <br>
+      <p><img src="assets/images/icon-list.svg" class="icon">&nbsp;&nbsp; Product discovery and building what matters
+      </p>
+      <br>
+      <p><img src="assets/images/icon-list.svg" class="icon">&nbsp;&nbsp; Measuring to ensure updates are a success</p>
+      <br>
+      <p><img src="assets/images/icon-list.svg" class="icon">&nbsp;&nbsp; And much more!</p>
+      <br>
+      <br>
+
+      <form action="https://formspree.io/f/mnqkobzd" method="post" enctype="text/plain">
+        <label for="name"><b>Email address:</b></label>
+        <input id="name" name="Email" type="email" pattern="[a-z0-9]{8,}" placeholder="email@company.com" required
+          minlength="5" maxlength="20">
+
+        <button type="submit" onclick="showMainDiv()"><b>Subscribe to monthly newsletter</b></button>
+      </form>
+    </section>
+    <picture>
+      <source media="(max-width: 600px)" srcset="assets/images/illustration-sign-up-mobile.svg">
+      <img src="assets/images/illustration-sign-up-desktop.svg" alt="">
+    </picture>
+  </main>
+  <!-- Sign-up form end -->
+
+  <!-- Success message start -->
+  <div class="main">
+    <section>
+      <img src="assets/images/icon-list.svg" class="icon">
+      <br> <br> <br>
+      <h1>Thanks for subscribing!</h1>
+      <br>
+
+      <p>A confirmation email has been sent to</p>
+      <p><b><a id='asdf'>ash@loremcompany.com.</a></b> Please open it and </p>
+      <p> click the button inside to confirm your subscription.</p>
+
+      <br><br>
+      <button type="button" onclick="location.reload();"><b>Dismiss
+          message</b></button>
+    </section>
+  </div>
+  <!-- Success message end -->
+
+  <div class="attribution">
+    Challenge by &nbsp;<a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+    Coded by &nbsp;<a href="#"> Hasan</a>.
+  </div>
+</body>
+
+<script src="script.js"></script>
+
+</html>
