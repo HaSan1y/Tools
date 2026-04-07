@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Twitter User Filter</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h2>Twitter User Filter</h2>
+
+  <div class="stats">
+    <span id="userCount">Users: 0</span>
+    <span id="keywordCount">Keywords: 0</span>
+    <span id="filteredCount">Filtered: 0</span>
+  </div>
+
+  <div class="section">
+    <h3>Add User</h3>
+    <input type="text" id="userInput" placeholder="elonmusk">
+    <button id="addUser">Add</button>
+  </div>
+
+  <div class="section">
+    <h3>Blocked Users</h3>
+    <ul id="userList"></ul>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <h3>Add Keyword</h3>
+    <input type="text" id="keywordInput" placeholder="crypto">
+    <button id="addKeyword">Add</button>
+  </div>
+
+  <div class="section">
+    <h3>Blocked Keywords</h3>
+    <ul id="keywordList"></ul>
+  </div>
+
+  <hr>
+
+  <div class="section">
+    <button id="exportBtn">Export Blocklist</button>
+    <input type="file" id="importFile" hidden>
+    <button id="importBtn">Import Blocklist</button>
+  </div>
+
+  <div class="section">
+    <button id="resetCounter">Reset Filter Counter</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

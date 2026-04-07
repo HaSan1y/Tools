@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Twitter User Filter",
+  "version": "1.0",
+  "description": "Hide tweets from specific users and keywords automatically.",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://x.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://x.com/*"
+      ],
+      "js": ["content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "twitter-filter@extension"
+    }
+  },
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "author": "https://github.com/HaSan1y",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

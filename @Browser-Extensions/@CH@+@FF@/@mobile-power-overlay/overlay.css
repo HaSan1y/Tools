@@ -1,0 +1,55 @@
+#power-overlay {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #111;
+    padding: 10px;
+    border-radius: 12px;
+    z-index: 999999;
+    display: flex;
+    gap: 6px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#power-overlay button {
+    background: #222;
+    color: white;
+    border: none;
+    padding: 10px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+#power-overlay button:hover {
+    background: #444;
+}
+
+#dragHandle {
+    cursor: move;
+    background: #333;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    font-weight: bold;
+}
+
+#dragHandle:hover {
+    background: #444;
+}
+
+.highlight {
+    background: hsla(60, 100%, 50%, 0.377);
+    color: black;
+}
+
+#highlightBtn,
+#translateBtn {
+    display: none;
+}
+
+#dragHandle::after {
+    content: " drag";
+    font-size: 10px;
+    opacity: 0.6;
+}

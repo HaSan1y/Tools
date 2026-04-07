@@ -1,0 +1,64 @@
+{
+  "manifest_version": 2,
+  "name": "mp3|wav|ogg Queue Player",
+  "version": "0.2",
+  "description": "plays mp3|wav|ogg files in a queue with shortcuts",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "tabs",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "commands": {
+    "next": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Right"
+      },
+      "description": "Next track"
+    },
+    "prev": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Left"
+      },
+      "description": "Previous track"
+    },
+    "playpause": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      },
+      "description": "Play / Pause"
+    }
+  },
+  "icons": {
+    "16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "queueplayer@hasan"
+    },
+    "author": "https://github.com/HaSan1y",
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline';"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+body {
+    width: 320px;
+    font-family: Arial;
+    text-align: center;
+    padding: 10px;
+}
+
+h2 {
+    margin-bottom: 10px;
+}
+
+#dropZone {
+    border: 2px dashed #888;
+    padding: 20px;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
+#dropZone:hover {
+    background: #f0f0f0;
+}
+
+button {
+    padding: 8px 15px;
+    cursor: pointer;
+}
+
+#preview {
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.preview-item {
+    border: 1px solid #ccc;
+    padding: 5px;
+}

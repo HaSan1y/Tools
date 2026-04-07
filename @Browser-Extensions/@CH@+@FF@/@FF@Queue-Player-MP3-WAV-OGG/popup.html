@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="stylesheet" href="popup.css"> -->
+  <style>
+    .btn {
+      background: #333;
+      color: white;
+      border: none;
+      padding: 8px;
+    }
+
+    .btn:hover {
+      background: #4caf50;
+    }
+
+    label {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+    }
+  </style>
+
+</head>
+
+<body>
+  <button class="btn" id="openPlayer">Open Player</button>
+  <label for="queue">queue: </label>
+  <ul id="queue"></ul>
+  <label for="nowPlaying">nowPlaying:
+    <div id="nowPlaying"></div>
+  </label>
+  <label for="progress">progress:
+    <progress id="progress" value="0" max="100"></progress></label>
+  <br />
+  <hr>
+  <hr>
+  <hr>
+  <label for="highlight">HTML-TXT: <button class="btn" id="highlight">Bright-txt-on-Dark</button></label>
+  <script src="popup.js"></script>
+</body>
+
+</html>

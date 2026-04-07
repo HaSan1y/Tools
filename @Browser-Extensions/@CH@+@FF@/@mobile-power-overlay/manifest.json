@@ -1,0 +1,51 @@
+{
+  "manifest_version": 3,
+  "name": "Mobile Power Overlay",
+  "version": "1.0",
+  "description": "Floating ALT SHIFT TAB Highlight Translate overlay",
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["overlay.css"]
+    }
+  ],
+
+  "action": {
+    "default_title": "Power Overlay"
+  },
+
+  "icons": {
+    "16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+
+  "author": "https://github.com/HaSan1y",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "mobile-power-overlay@hasan.dev",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

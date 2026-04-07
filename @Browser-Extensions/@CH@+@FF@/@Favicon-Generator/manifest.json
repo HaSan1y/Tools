@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "Favicon Generator",
+  "version": "1.0",
+  "description": "Generate favicon and icons from one image.",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "author": "https://github.com/HaSan1y",
+  "permissions": [],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "favicon-generator@hasan.dev",
+      "strict_min_version": "109.0"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+  }
+}

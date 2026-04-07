@@ -1,0 +1,40 @@
+{
+   "manifest_version": 3,
+   "name": "Yu-Gi-Oh Reveal Alerts",
+   "version": "0.5",
+   "description": "Notifies when new Yu-Gi-Oh cards appear",
+   "permissions": [
+      "notifications",
+      "storage",
+      "alarms"
+   ],
+   "host_permissions": [
+      "https://db.ygoprodeck.com/*"
+   ],
+   "background": {
+      "service_worker": "background.js"
+   },
+   "action": {
+      "default_popup": "popup.html"
+   },  
+"web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "background.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+   "icons": {
+      "16": "16.png",
+      "48": "48.png",
+      "128": "128.png"
+   },
+   "author": "https://github.com/HaSan1y",
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline';"
+   }
+}

@@ -1,0 +1,51 @@
+{
+  "manifest_version": 2,
+  "name": "GitHub README Simplifier",
+  "version": "0.5",
+  "description": "Simplify and translate GitHub READMEs using your own LLM",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "http://localhost:1234/*",
+    "https://github.com/*",
+    "https://api.openai.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    "marked.min.js"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "readme-simplifier@hasan"
+    }
+  },
+  "author": "https://github.com/HaSan1y",
+  "content_security_policy": "script-src 'self'; object-src 'self';"
+}

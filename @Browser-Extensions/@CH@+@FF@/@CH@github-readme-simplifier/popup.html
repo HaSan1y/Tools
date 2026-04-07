@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Simplify README</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      width: 400px;
+      padding: 10px;
+    }
+
+    button, select {
+      width: 100%;
+      padding: 8px;
+      margin-top: 8px;
+    }
+
+    #output {
+      margin-top: 15px;
+      max-height: 400px;
+      overflow-y: auto;
+      border-top: 1px solid #ddd;
+      padding-top: 10px;
+    }
+
+    pre {
+      background: #f4f4f4;
+      padding: 10px;
+      overflow-x: auto;
+    }
+
+    code {
+      background: #eee;
+      padding: 2px 4px;
+    }
+
+  </style>
+</head>
+<body>
+
+  <h3>README Simplifier</h3>
+
+  <select id="language">
+    <option value="English">English</option>
+    <option value="German">German</option>
+    <option value="French">French</option>
+    <option value="Turkish">Turkish</option>
+  </select>
+
+<label for="provider">AI Provider:</label>
+<select id="provider">
+  <option value="lmstudio">LM Studio (Local)</option>
+  <option value="openai">OpenAI API</option>
+</select>
+<input type="text" id="modelName" placeholder="Model name (e.g. mistral-7b)">
+<input type="password" id="apiKey" placeholder="OpenAI API Key (if needed)">
+
+<label style="display:block; margin-top:8px;">
+  <input type="checkbox" id="openInTab">
+  Open result in new tab
+</label>
+
+  <button id="simplifyBtn">Simplify README</button>
+  <button id="printBtn">Print</button>
+
+  <div id="status"></div>
+  <div id="output"></div>
+
+  <script src="marked.min.js"></script>
+  <script src="popup.js"></script>
+
+</body>
+</html>

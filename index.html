@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+   <title>Browser Extensions & Challenges</title>
+   <style>
+      body {
+         background: #0f0f0f;
+         color: #00ffcc;
+         font-family: Arial, sans-serif;
+         padding: 40px;
+         max-width: 950px;
+         margin: auto;
+         line-height: 1.6;
+      }
+
+      h1 {
+         color: #00ffaa;
+         text-align: center;
+         margin-bottom: 40px;
+         animation: fadeIn 1s ease;
+      }
+
+      h2 {
+         border-bottom: 1px solid #00ffaa;
+         padding-bottom: 5px;
+      }
+
+      .section {
+         margin-bottom: 50px;
+         animation: fadeUp 0.8s ease;
+      }
+
+      .card {
+         background: #111;
+         padding: 15px;
+         margin: 12px 0;
+         border: 1px solid #00ffcc;
+         border-radius: 8px;
+         transition: 0.25s ease;
+         opacity: 0;
+         transform: translateY(10px);
+         animation: fadeCard 0.4s forwards;
+      }
+
+      .card:hover {
+         transform: translateY(-3px);
+         border-color: #00ffaa;
+         box-shadow: 0 0 8px rgba(0, 255, 170, 0.3);
+      }
+
+      .card-title {
+         font-size: 18px;
+         font-weight: bold;
+      }
+
+      .card-desc {
+         color: #88ffee;
+         font-size: 14px;
+      }
+
+      .card-version {
+         font-size: 12px;
+         color: #00ffaa;
+      }
+
+      a {
+         color: #00ffaa;
+         text-decoration: none;
+      }
+
+      a:hover {
+         color: white;
+      }
+
+      button {
+         background: #111;
+         color: #00ffaa;
+         border: 1px solid #00ffaa;
+         padding: 7px 14px;
+         margin-top: 10px;
+         cursor: pointer;
+         border-radius: 5px;
+         transition: 0.2s;
+      }
+
+      button:hover {
+         background: #00ffaa;
+         color: black;
+      }
+
+      .search {
+         width: 100%;
+         padding: 10px;
+         background: #111;
+         border: 1px solid #00ffaa;
+         color: #00ffaa;
+         margin-bottom: 20px;
+         border-radius: 6px;
+      }
+
+      #readme {
+         white-space: pre-wrap;
+         background: #111;
+         padding: 15px;
+         border: 1px solid #00ffaa;
+         border-radius: 8px;
+         max-height: 400px;
+         overflow-y: auto;
+      }
+
+      footer {
+         margin-top: 60px;
+         text-align: center;
+         color: #00ffaa;
+         font-size: 12px;
+      }
+
+      @keyframes fadeIn {
+         from {
+            opacity: 0
+         }
+
+         to {
+            opacity: 1
+         }
+      }
+
+      @keyframes fadeUp {
+         from {
+            opacity: 0;
+            transform: translateY(15px);
+         }
+
+         to {
+            opacity: 1;
+            transform: translateY(0);
+         }
+      }
+
+      @keyframes fadeCard {
+         to {
+            opacity: 1;
+            transform: translateY(0);
+         }
+      }
+   </style>
+</head>
+
+<body>
+   <h1>🧩 Browser Extensions & Challenges</h1>
+   <input class="search" placeholder="Search extensions or challenges..." oninput="searchCards(this.value)">
+   <div class="section">
+      <h2>📦 Extensions</h2>
+      <div id="extensions"></div>
+      <button onclick="toggleExtensions()">Show more</button>
+   </div>
+   <div class="section">
+      <h2>🏆 Frontend Mentor Challenges</h2>
+      <div id="challenges"></div>
+      <button onclick="toggleChallenges()">Show more</button>
+   </div>
+   <div class="section">
+      <h2>📚 Repository README</h2>
+      <button onclick="loadReadme()">Load README</button>
+      <div id="readme"></div>
+   </div>
+   <footer>
+      Made by HaSan1y
+   </footer>
+
+   <script>
+      let showAllExtensions = false;
+      let showAllChallenges = false;
+
+      const extensionPaths = [
+         "@Browser-Extensions/@CH@+@FF@/@FF@Queue-Player-MP3-WAV-OGG/",
+         "@Browser-Extensions/@CH@+@FF@/@FF@github-readme-simplifier/",
+         "@Browser-Extensions/@CH@+@FF@/@CH@Queue-Player-MP3-WAV-OGG/",
+         "@Browser-Extensions/@CH@+@FF@/@CH@github-readme-simplifier/",
+         "@Browser-Extensions/@CH@+@FF@/@Favicon-generator/",
+         "@Browser-Extensions/@CH@+@FF@/@mobile-power-overlay/",
+         "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/"
+      ];
+
+      const challengePaths = [
+         "+chall/ch-aapi/",
+         "+chall/ch-form/",
+         "+chall/ch-grid-5/",
+         "+chall/ch-row/",
+         "+chall/cookie-law/"
+      ];
+
+      async function loadExtensions() {
+         const container = document.getElementById("extensions");
+         container.innerHTML = "";
+         const list = showAllExtensions ? extensionPaths : extensionPaths.slice(0, 2);
+         for (const path of list) {
+            try {
+               const res = await fetch(path + "manifest.json");
+               const manifest = await res.json();
+               const card = document.createElement("div");
+               card.className = "card";
+               card.innerHTML = `
+                <div class="card-title">
+                    <a href="${path}">${manifest.name}</a>
+                </div>
+                <div class="card-desc">
+                    ${manifest.description || "No description"}
+                </div>
+                <div class="card-version">
+                    v${manifest.version}
+                </div>
+            `;
+               container.appendChild(card);
+            } catch (e) {
+               console.log("Missing manifest:", path);
+            }
+         }
+      }
+
+      function toggleExtensions() {
+         showAllExtensions = !showAllExtensions;
+         loadExtensions();
+      }
+
+      function loadChallenges() {
+         const container = document.getElementById("challenges");
+         container.innerHTML = "";
+         const list = showAllChallenges ? challengePaths : challengePaths.slice(0, 2);
+
+         list.forEach(path => {
+            const name = path.split("/")[1];
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+            <div class="card-title">
+                <a href="${path}index.html">${name}</a>
+            </div>
+            <div class="card-desc">
+                Frontend Mentor Challenge
+            </div>
+        `;
+            container.appendChild(card);
+         });
+      }
+
+      function toggleChallenges() {
+         showAllChallenges = !showAllChallenges;
+         loadChallenges();
+      }
+
+      async function loadReadme() {
+         const res = await fetch("README.md");
+         const text = await res.text();
+         document.getElementById("readme").textContent = text;
+      }
+
+      function searchCards(query) {
+         query = query.toLowerCase();
+         document.querySelectorAll(".card").forEach(card => {
+            const text = card.innerText.toLowerCase();
+            if (text.includes(query)) {
+               card.style.display = "block";
+            } else {
+               card.style.display = "none";
+            }
+         });
+      }
+      loadExtensions();
+      loadChallenges();
+   </script>
+</body>
+
+</html>

@@ -1,0 +1,1 @@
+chrome.storage.local.clear()     //right click popup.html-> inspect <- reset storage
