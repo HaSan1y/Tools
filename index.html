@@ -197,19 +197,40 @@
          const list = showAllExtensions ? extensionPaths : extensionPaths.slice(0, 2);
          for (const path of list) {
             try {
+
                const res = await fetch(path + "manifest.json");
                const manifest = await res.json();
+
+               const githubBase =
+                  "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
+
+               const zipBase =
+                  "https://github.com/HaSan1y/-browser-tools/archive/refs/heads/main.zip";
+
                const card = document.createElement("div");
                card.className = "card";
+
                card.innerHTML = `
                 <div class="card-title">
-                    <a href="${path}">${manifest.name}</a>
+                    <a href="/">${manifest.name}</a>
                 </div>
+
                 <div class="card-desc">
                     ${manifest.description || "No description"}
                 </div>
+
                 <div class="card-version">
                     v${manifest.version}
+                </div>
+
+                <div style="margin-top:10px">
+                    <a href="${githubBase}" target="_blank">
+                        <button>View Source</button>
+                    </a>
+
+                    <a href="${zipBase}" target="_blank">
+                        <button>Download ZIP</button>
+                    </a>
                 </div>
             `;
                container.appendChild(card);
@@ -234,12 +255,12 @@
             const card = document.createElement("div");
             card.className = "card";
             card.innerHTML = `
-            <div class="card-title">
-                <a href="${path}index.html">${name}</a>
+                  <div class="card-title">
+                     <a href="${path}index.html">${name}</a>
             </div>
-            <div class="card-desc">
-                Frontend Mentor Challenge
-            </div>
+                  <div class="card-desc">
+                     Frontend Mentor Challenge
+                  </div>
         `;
             container.appendChild(card);
          });
@@ -251,7 +272,7 @@
       }
 
       async function loadReadme() {
-         const res = await fetch("README.md");
+         const res = await fetch("./README.md");
          const text = await res.text();
          document.getElementById("readme").textContent = text;
       }
