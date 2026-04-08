@@ -187,7 +187,7 @@
          "@Browser-Extensions/@CH@+@FF@/@Favicon-generator/",
          "@Browser-Extensions/@CH@+@FF@/@mobile-power-overlay/",
          "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
-         "@Browser-Extensions/@CH@+@FF@/YGO-Reveal-Alerts"
+         "@Browser-Extensions/@CH@+@FF@/YGO-Reveal-Alerts/"
       ];
 
       const challengePaths = [
@@ -198,8 +198,8 @@
          "@chall/cookie-law/"
       ];
       const colabPaths = [
-         "@collab/wan2gp_on_colab",
-         "@collab/math+scrape+kanji"
+         "collab/wan2gp_on_colab/wan2gp_on_colab",
+         "collab/math+scrape+kanji/math+scrape+kanji"
       ];
 
       async function loadExtensions() {
@@ -298,13 +298,13 @@
          container.innerHTML = "";
          const list = showAllColab ? colabPaths : colabPaths.slice(0, 2);
          list.forEach(path => {
-            const githubBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
+            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/%40" + path + ".py";
             const name = path.split("/")[1];
             const card = document.createElement("div");
             card.className = "card";
             card.innerHTML = `
                      <div class="card-title">
-                        <a href="${githubBase}">${name}</a>
+                        <a href="${gitBase}">${name}</a>
                      </div>
                      <div class="card-desc">
                         Google Colab Notebook
