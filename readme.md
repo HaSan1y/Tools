@@ -2,66 +2,55 @@
 
 **Collection of browser extensions and frontend mentor challenges.**
 
-**## 📦 Extensions**
+## 📦 Extensions
 
-**- MP3 Queue Player**
-
-**- GitHub Readme Simplifier**
-
-**- Favicon Generator**
-
-**- Mobile Power Overlay**
-
-**- Twitter Filter**
+- MP3 Queue Player
+- GitHub Readme Simplifier
+- Favicon Generator
+- Mobile Power Overlay
+- Twitter Filter
 
 **All extensions are hybrid:**
 
-**- Chrome**
-
-**- Firefox**
-
-**- Edge**
-
-**- Kiwi**
-
-**- Brave**
+- Chrome**
+- Firefox**
+- Edge**
+- Kiwi**
+- Brave**
 
 **## 🏆 Frontend Mentor Challenges**
-
 **Various UI and layout challenges.**
-
-**## 🌐 Live Overview**
-
-**Open:**
-
-**oversight.html**
-
-**or**
 
 **GitHub Pages:**
 **https://HaSan1y.github.io/browser-tools/**
 
-**## 🛠 Development**
-**### Chrome**
-**chrome://extensions**
-**Load unpacked**
-**### Firefox**
-**about:debugging**
-**Load temporary add-on**
-**manifest.json**
-**### Firefox permanent**
-**Developer Edition**
-**about:config**   |->  about:debugging
-**xpinstall.signatures.required = false**
+## 🛠 Development**
+### Chrome**
+chrome://extensions**
+Load unpacked**
+### Firefox**
+about:debugging**
+Load temporary add-on**
+manifest.json**
+### Firefox permanent**
+Developer Edition**
+about:config**   |->  about:debugging
+xpinstall.signatures.required = false**
 
-**## 📁 Structure**
+## 📁 Structure
+
 ├── index.html
-├── README.md
+
+├── readme.md
+
 │
 ├── @Browser-Extensions/
+
 │
-├── +chall/
+├── @chall/
+
+│
+├── @collab/
 
 ## 👨‍💻 Author**
-
 https://github.com/HaSan1y**
