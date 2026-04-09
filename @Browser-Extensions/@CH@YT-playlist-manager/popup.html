@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>YT Playlist Manager</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <h1>YT Playlist Manager</h1>
+
+        <button id="scan">Scan Playlists</button>
+
+        <div class="counter">
+            Playlists found: <span id="count">0</span>
+        </div>
+
+        <div class="buttons">
+            <button id="json">Download JSON</button>
+            <button id="csv">Download CSV</button>
+            <button id="txt">Download TXT</button>
+            <button id="extractVideos">Extract Videos</button>
+        </div>
+
+        <button id="reset" class="reset">Reset</button>
+
+        <div id="status"></div>
+
+    </div>
+
+    <script src="export.js"></script>
+    <script src="popup.js"></script>
+</body>
+
+</html>
