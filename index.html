@@ -187,7 +187,8 @@
          "@Browser-Extensions/@CH@+@FF@/@Favicon-generator/",
          "@Browser-Extensions/@CH@+@FF@/@mobile-power-overlay/",
          "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
-         "@Browser-Extensions/@CH@+@FF@/YGO-Reveal-Alerts/"
+         "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
+         "@Browser-Extensions/@CH@YT-playlist-manager/"
       ];
 
       const challengePaths = [
@@ -198,8 +199,8 @@
          "@chall/cookie-law/"
       ];
       const colabPaths = [
-         "collab/wan2gp_on_colab/wan2gp_on_colab",
-         "collab/math+scrape+kanji/math+scrape+kanji"
+         "@collab/wan2gp_on_colab/wan2gp_on_colab",
+         "@collab/math+scrape+kanji/math+scrape+kanji"
       ];
 
       async function loadExtensions() {
@@ -225,20 +226,16 @@
                 <div class="card-title">
                     <a href="/">${manifest.name}</a>
                 </div>
-
                 <div class="card-desc">
                     ${manifest.description || "No description"}
                 </div>
-
                 <div class="card-version">
                     v${manifest.version}
                 </div>
-
                 <div style="margin-top:10px">
                     <a href="${githubBase}" target="_blank">
                         <button>View Source</button>
                     </a>
-
                     <a href="${zipBase}" target="_blank">
                         <button>Download ZIP</button>
                     </a>
@@ -327,6 +324,7 @@
       }
       loadExtensions();
       loadChallenges();
+      loadColab();
    </script>
 </body>
 
