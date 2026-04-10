@@ -36,7 +36,16 @@ api.runtime.onMessage.addListener((msg, sender, sendResponse) => {
 });
 
 async function extractVideos() {
-    // await new Promise(r => setTimeout(r, 2000));
+    //     if (!location.href.includes("playlist?list=")) {
+    //     alert("Open full playlist page");
+    //     return [];
+    // }
+
+    // await autoScroll();
+
+    // const items = document.querySelectorAll(
+    //     "ytd-playlist-video-renderer"
+    // );
     const elements = document.querySelectorAll(
         "ytd-playlist-panel-video-renderer"
     );
