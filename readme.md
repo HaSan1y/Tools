@@ -22,6 +22,10 @@
 - Kiwi
 - Brave
 
+**## 🧊 Blender Extensions**
+
+- LM Studio Prompt Executor (Send AI tasks to LM Studio and execute Python response in Blender)
+
 **## 🏆 Frontend Mentor Challenges**
 **Various UI and layout challenges.**
 
@@ -52,6 +56,8 @@ xpinstall.signatures.required = false
 ├── @chall/
 
 ├── @collab/
+
+├── Blender-Extensions/
 
 ## 👨‍💻 Author
 https://github.com/HaSan1y

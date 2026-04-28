@@ -161,6 +161,11 @@
       <button onclick="toggleColab()">Show more</button>
    </div>
    <div class="section">
+      <h2>🧊 Blender Extensions</h2>
+      <div id="blender-ext"></div>
+      <button onclick="toggleBlenderExt()">Show more</button>
+   </div>
+   <div class="section">
       <h2>🏆 Frontend Mentor Challenges</h2>
       <div id="challenges"></div>
       <button onclick="toggleChallenges()">Show more</button>
@@ -178,6 +183,7 @@
       let showAllExtensions = false;
       let showAllChallenges = false;
       let showAllColab = false;
+      let showAllBlenderExt = false;
 
       const extensionPaths = [
          "@Browser-Extensions/@CH@+@FF@/@FF@Queue-Player-MP3-WAV-OGG/",
@@ -199,7 +205,13 @@
       ];
       const colabPaths = [
          "@collab/wan2gp_on_colab/wan2gp_on_colab",
-         "@collab/math+scrape+kanji/math+scrape+kanji"
+         "@collab/math+scrape+kanji/math+scrape+kanji",
+         "@collab/math+scrape+kanji/github-trend-extract",
+         "@collab/math+scrape+kanji/song-prompt"
+      ];
+
+      const blenderExtPaths = [
+         "Blender-Extensions/blender_lmstudio.py"
       ];
 
       async function loadExtensions() {
@@ -294,7 +306,7 @@
          container.innerHTML = "";
          const list = showAllColab ? colabPaths : colabPaths.slice(0, 2);
          list.forEach(path => {
-            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/%40" + path + ".py";
+            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path + ".py";
             const name = path.split("/")[1];
             const card = document.createElement("div");
             card.className = "card";
@@ -321,9 +333,42 @@
             }
          });
       }
+
+      function toggleBlenderExt() {
+         showAllBlenderExt = !showAllBlenderExt;
+         loadBlenderExt();
+      }
+
+      function loadBlenderExt() {
+         const container = document.getElementById("blender-ext");
+         container.innerHTML = "";
+         const list = showAllBlenderExt ? blenderExtPaths : blenderExtPaths.slice(0, 2);
+         list.forEach(path => {
+            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
+            const name = path.split("/")[1];
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                     <div class="card-title">
+                        <a href="${gitBase}" target="_blank">${name}</a>
+                     </div>
+                     <div class="card-desc">
+                        Blender Add-on (LM Studio Integration)
+                     </div>
+                     <div style="margin-top:10px">
+                        <a href="${gitBase}" target="_blank">
+                            <button>View Source</button>
+                        </a>
+                     </div>
+               `;
+            container.appendChild(card);
+         });
+      }
+
       loadExtensions();
       loadChallenges();
       loadColab();
+      loadBlenderExt();
    </script>
 </body>
 
