@@ -1,410 +1,559 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-   <title>Browser Extensions & Challenges</title>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="A curated collection of browser extensions, frontend challenges, Blender tools, scripts, and Colab utilities by HaSan1y.">
+   <title>HaSan1y Tools</title>
    <style>
+      :root {
+         color-scheme: dark;
+         --bg: #0b0f14;
+         --panel: #111821;
+         --panel-strong: #172230;
+         --line: #263445;
+         --text: #edf4f8;
+         --muted: #9fb0bd;
+         --accent: #37d4a4;
+         --accent-2: #64a8ff;
+         --warning: #ffd166;
+         --shadow: 0 18px 60px rgba(0, 0, 0, 0.32);
+      }
+
+      * {
+         box-sizing: border-box;
+      }
+
       body {
-         background: #0f0f0f;
-         color: #00ffcc;
-         font-family: Arial, sans-serif;
-         padding: 40px;
-         max-width: 950px;
-         margin: auto;
-         line-height: 1.6;
-      }
-
-      h1 {
-         color: #00ffaa;
-         text-align: center;
-         margin-bottom: 40px;
-         animation: fadeIn 1s ease;
-      }
-
-      h2 {
-         border-bottom: 1px solid #00ffaa;
-         padding-bottom: 5px;
-      }
-
-      .section {
-         margin-bottom: 50px;
-         animation: fadeUp 0.8s ease;
-      }
-
-      .card {
-         background: #111;
-         padding: 15px;
-         margin: 12px 0;
-         border: 1px solid #00ffcc;
-         border-radius: 8px;
-         transition: 0.25s ease;
-         opacity: 0;
-         transform: translateY(10px);
-         animation: fadeCard 0.4s forwards;
-      }
-
-      .card:hover {
-         transform: translateY(-3px);
-         border-color: #00ffaa;
-         box-shadow: 0 0 8px rgba(0, 255, 170, 0.3);
-      }
-
-      .card-title {
-         font-size: 18px;
-         font-weight: bold;
-      }
-
-      .card-desc {
-         color: #88ffee;
-         font-size: 14px;
-      }
-
-      .card-version {
-         font-size: 12px;
-         color: #00ffaa;
+         margin: 0;
+         background: var(--bg);
+         color: var(--text);
+         font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+         line-height: 1.55;
       }
 
       a {
-         color: #00ffaa;
+         color: inherit;
          text-decoration: none;
       }
 
       a:hover {
-         color: white;
+         color: var(--accent);
       }
 
-      button {
-         background: #111;
-         color: #00ffaa;
-         border: 1px solid #00ffaa;
-         padding: 7px 14px;
-         margin-top: 10px;
-         cursor: pointer;
-         border-radius: 5px;
-         transition: 0.2s;
+      button,
+      input {
+         font: inherit;
       }
 
-      button:hover {
-         background: #00ffaa;
-         color: black;
+      .shell {
+         width: min(1160px, calc(100% - 32px));
+         margin: 0 auto;
+      }
+
+      .hero {
+         padding: 56px 0 28px;
+         border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .eyebrow {
+         display: inline-flex;
+         align-items: center;
+         gap: 8px;
+         color: var(--accent);
+         font-size: 13px;
+         font-weight: 700;
+         letter-spacing: 0.08em;
+         text-transform: uppercase;
+      }
+
+      .hero h1 {
+         max-width: 820px;
+         margin: 14px 0 12px;
+         font-size: clamp(34px, 6vw, 70px);
+         line-height: 0.98;
+         letter-spacing: 0;
+      }
+
+      .hero p {
+         max-width: 760px;
+         margin: 0;
+         color: var(--muted);
+         font-size: 18px;
+      }
+
+      .toolbar {
+         display: grid;
+         grid-template-columns: minmax(0, 1fr) auto;
+         gap: 12px;
+         margin: 28px 0 18px;
       }
 
       .search {
          width: 100%;
-         padding: 10px;
-         background: #111;
-         border: 1px solid #00ffaa;
-         color: #00ffaa;
-         margin-bottom: 20px;
-         border-radius: 6px;
-      }
-
-      #readme {
-         white-space: pre-wrap;
-         background: #111;
-         padding: 15px;
-         border: 1px solid #00ffaa;
+         min-height: 48px;
+         border: 1px solid var(--line);
          border-radius: 8px;
-         max-height: 400px;
-         overflow-y: auto;
+         background: #0f151d;
+         color: var(--text);
+         padding: 0 16px;
+         outline: none;
       }
 
-      footer {
-         margin-top: 60px;
-         text-align: center;
-         color: #00ffaa;
+      .search:focus {
+         border-color: var(--accent);
+         box-shadow: 0 0 0 3px rgba(55, 212, 164, 0.16);
+      }
+
+      .repo-link {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         min-height: 48px;
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         padding: 0 16px;
+         background: var(--panel);
+         color: var(--text);
+         font-weight: 700;
+      }
+
+      .stats {
+         display: grid;
+         grid-template-columns: repeat(4, minmax(0, 1fr));
+         gap: 12px;
+         margin-top: 24px;
+      }
+
+      .stat {
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         padding: 16px;
+         background: var(--panel);
+      }
+
+      .stat strong {
+         display: block;
+         font-size: 28px;
+         line-height: 1;
+      }
+
+      .stat span {
+         color: var(--muted);
+         font-size: 13px;
+      }
+
+      .section {
+         padding: 34px 0 6px;
+      }
+
+      .section-head {
+         display: flex;
+         align-items: end;
+         justify-content: space-between;
+         gap: 18px;
+         margin-bottom: 16px;
+      }
+
+      .section h2 {
+         margin: 0;
+         font-size: 22px;
+      }
+
+      .section-copy {
+         margin: 4px 0 0;
+         color: var(--muted);
+         font-size: 14px;
+      }
+
+      .grid {
+         display: grid;
+         grid-template-columns: repeat(3, minmax(0, 1fr));
+         gap: 14px;
+      }
+
+      .card {
+         display: flex;
+         min-height: 190px;
+         flex-direction: column;
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         background: var(--panel);
+         padding: 18px;
+         box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+         transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+      }
+
+      .card:hover {
+         transform: translateY(-2px);
+         border-color: rgba(55, 212, 164, 0.72);
+         box-shadow: var(--shadow);
+      }
+
+      .card-top {
+         display: flex;
+         align-items: flex-start;
+         justify-content: space-between;
+         gap: 12px;
+      }
+
+      .card-title {
+         margin: 0;
+         font-size: 17px;
+         line-height: 1.25;
+      }
+
+      .badge {
+         flex: 0 0 auto;
+         border: 1px solid rgba(255, 255, 255, 0.14);
+         border-radius: 999px;
+         padding: 3px 8px;
+         color: var(--muted);
+         font-size: 11px;
+         font-weight: 700;
+         text-transform: uppercase;
+      }
+
+      .badge.pro {
+         border-color: rgba(255, 209, 102, 0.5);
+         color: var(--warning);
+      }
+
+      .card-desc {
+         margin: 12px 0 14px;
+         color: var(--muted);
+         font-size: 14px;
+      }
+
+      .card-meta {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 7px;
+         margin-top: auto;
+      }
+
+      .pill {
+         border-radius: 999px;
+         background: rgba(100, 168, 255, 0.12);
+         color: #b9d7ff;
+         padding: 4px 8px;
          font-size: 12px;
       }
 
-      @keyframes fadeIn {
-         from {
-            opacity: 0
-         }
+      .actions {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 8px;
+         margin-top: 16px;
+      }
 
-         to {
-            opacity: 1
+      .action {
+         display: inline-flex;
+         align-items: center;
+         justify-content: center;
+         min-height: 36px;
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         padding: 0 12px;
+         background: #0f151d;
+         color: var(--text);
+         font-size: 13px;
+         font-weight: 700;
+      }
+
+      .action.primary {
+         border-color: rgba(55, 212, 164, 0.65);
+         background: rgba(55, 212, 164, 0.12);
+         color: #b7ffe8;
+      }
+
+      .empty {
+         display: none;
+         border: 1px dashed var(--line);
+         border-radius: 8px;
+         padding: 24px;
+         color: var(--muted);
+         text-align: center;
+      }
+
+      .readme {
+         white-space: pre-wrap;
+         max-height: 360px;
+         overflow: auto;
+         border: 1px solid var(--line);
+         border-radius: 8px;
+         background: var(--panel);
+         padding: 18px;
+         color: var(--muted);
+      }
+
+      footer {
+         padding: 44px 0;
+         color: var(--muted);
+         font-size: 13px;
+      }
+
+      @media (max-width: 900px) {
+         .grid,
+         .stats {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
          }
       }
 
-      @keyframes fadeUp {
-         from {
-            opacity: 0;
-            transform: translateY(15px);
+      @media (max-width: 640px) {
+         .hero {
+            padding-top: 36px;
          }
 
-         to {
-            opacity: 1;
-            transform: translateY(0);
+         .toolbar,
+         .grid,
+         .stats {
+            grid-template-columns: 1fr;
          }
-      }
 
-      @keyframes fadeCard {
-         to {
-            opacity: 1;
-            transform: translateY(0);
+         .section-head {
+            align-items: flex-start;
+            flex-direction: column;
          }
       }
    </style>
 </head>
 
 <body>
-   <h1>🧩 Browser Extensions & Challenges</h1>
-   <input class="search" placeholder="Search extensions or challenges..." oninput="searchCards(this.value)">
-   <div class="section">
-      <h2>📦 Extensions</h2>
-      <div id="extensions"></div>
-      <button onclick="toggleExtensions()">Show more</button>
-   </div>
-   <div class="section">
-      <h2>🤝 collab</h2>
-      <div id="colab"></div>
-      <button onclick="toggleColab()">Show more</button>
-   </div>
-   <div class="section">
-      <h2>🧊 Blender Extensions</h2>
-      <div id="blender-ext"></div>
-      <button onclick="toggleBlenderExt()">Show more</button>
-   </div>
-   <div class="section">
-      <h2>⚡ Windows PowerShell</h2>
-      <div id="win-powershell"></div>
-      <button onclick="toggleWinPowerShell()">Show more</button>
-   </div>
-   <div class="section">
-      <h2>🏆 Frontend Mentor Challenges</h2>
-      <div id="challenges"></div>
-      <button onclick="toggleChallenges()">Show more</button>
-   </div>
-   <div class="section">
-      <h2>📚 Repository README</h2>
-      <button onclick="loadReadme()">Load README</button>
-      <div id="readme"></div>
-   </div>
-   <footer>
-      Made by HaSan1y
-   </footer>
+   <header class="hero">
+      <div class="shell">
+         <span class="eyebrow">Browser tools, scripts, and UI labs</span>
+         <h1>HaSan1y Tools</h1>
+         <p>A polished launcher for browser extensions, Frontend Mentor challenges, Blender automation, PowerShell helpers, and Colab experiments.</p>
+         <div class="toolbar">
+            <input class="search" id="search" type="search" placeholder="Search by name, platform, or category" autocomplete="off">
+            <a class="repo-link" href="https://github.com/HaSan1y/-browser-tools" target="_blank" rel="noreferrer">GitHub Repository</a>
+         </div>
+         <div class="stats" id="stats"></div>
+      </div>
+   </header>
+
+   <main class="shell">
+      <section class="section">
+         <div class="section-head">
+            <div>
+               <h2>Extensions</h2>
+               <p class="section-copy">Chrome, Firefox, Edge, Brave, and Kiwi-ready tools where supported.</p>
+            </div>
+         </div>
+         <div class="grid" id="extensions"></div>
+      </section>
+
+      <section class="section">
+         <div class="section-head">
+            <div>
+               <h2>Frontend Challenges</h2>
+               <p class="section-copy">Small interface builds and layout practice projects.</p>
+            </div>
+         </div>
+         <div class="grid" id="challenges"></div>
+      </section>
+
+      <section class="section">
+         <div class="section-head">
+            <div>
+               <h2>Automation And Scripts</h2>
+               <p class="section-copy">Blender, PowerShell, and Colab utilities collected in one place.</p>
+            </div>
+         </div>
+         <div class="grid" id="scripts"></div>
+      </section>
+
+      <section class="section">
+         <div class="section-head">
+            <div>
+               <h2>Repository README</h2>
+               <p class="section-copy">Project notes loaded directly from the repository.</p>
+            </div>
+            <button class="action primary" type="button" id="load-readme">Load README</button>
+         </div>
+         <div class="readme" id="readme">README is ready to load.</div>
+      </section>
+
+      <p class="empty" id="empty">No tools match this search.</p>
+   </main>
+
+   <footer class="shell">Made by HaSan1y</footer>
 
    <script>
-      let showAllExtensions = false;
-      let showAllChallenges = false;
-      let showAllColab = false;
-      let showAllBlenderExt = false;
-      let showAllWinPowerShell = false;
+      const repoBase = "https://github.com/HaSan1y/-browser-tools/tree/main/";
+      const downloadBase = "https://github.com/HaSan1y/-browser-tools/archive/refs/heads/main.zip";
 
-      const extensionPaths = [
-         "@Browser-Extensions/@CH@+@FF@/@FF@Queue-Player-MP3-WAV-OGG/",
-         "@Browser-Extensions/@CH@+@FF@/@CH@github-readme-simplifier/",
-         "@Browser-Extensions/@CH@+@FF@/@Favicon-Generator/",
-         "@Browser-Extensions/@CH@+@FF@/@mobile-power-overlay/",
-         "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
-         "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
-         "@Browser-Extensions/@CH@focus-mode--FREE-VERSION/",
-         "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/",
-         "@Browser-Extensions/Translate2CSV/",
-         "@Browser-Extensions/ff-page-watcher-extension/"
-      ];
-
-      const challengePaths = [
-         "@chall/ch-aapi/",
-         "@chall/ch-form/",
-         "@chall/ch-grid-5/",
-         "@chall/ch-row/",
-         "@chall/cookie-law/"
-      ];
-      const colabPaths = [
-         "@collab/wan2gp_on_colab/wan2gp_on_colab",
-         "@collab/math+scrape+kanji/math+scrape+kanji",
-         "@collab/math+scrape+kanji/github-trend-extract",
-         "@collab/math+scrape+kanji/song-prompt"
-      ];
-
-      const blenderExtPaths = [
-         "Blender-Extensions/blender_lmstudio.py"
-      ];
-      const WinPowerShellPaths = [
-         "win11powershell/create_extension.ps1"
-      ];
-
-      async function loadExtensions() {
-         const container = document.getElementById("extensions");
-         container.innerHTML = "";
-         const list = showAllExtensions ? extensionPaths : extensionPaths.slice(0, 2);
-         for (const path of list) {
-            try {
-
-               const res = await fetch(path + "manifest.json");
-               const manifest = await res.json();
-
-               const githubBase =
-                  "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
-
-               const zipBase =
-                  "https://github.com/HaSan1y/-browser-tools/archive/refs/heads/main.zip";
-
-               const card = document.createElement("div");
-               card.className = "card";
-
-               card.innerHTML = `
-                <div class="card-title">
-                    <a href="/">${manifest.name}</a>
-                </div>
-                <div class="card-desc">
-                    ${manifest.description || "No description"}
-                </div>
-                <div class="card-version">
-                    v${manifest.version}
-                </div>
-                <div style="margin-top:10px">
-                    <a href="${githubBase}" target="_blank">
-                        <button>View Source</button>
-                    </a>
-                    <a href="${zipBase}" target="_blank">
-                        <button>Download ZIP</button>
-                    </a>
-                </div>
-            `;
-               container.appendChild(card);
-            } catch (e) {
-               console.log("Missing manifest:", path);
-            }
+      const extensions = [
+         {
+            name: "Focus Mode Pro",
+            path: "@Browser-Extensions/@CH@focus-mode--PRO-VERSION/",
+            description: "Reader overlay, selectable focus area, adjustable width, themes, and non-destructive restore.",
+            version: "2.0.0",
+            platforms: ["Chrome", "Edge", "Brave", "Kiwi"],
+            badge: "Pro"
+         },
+         {
+            name: "Focus Mode",
+            path: "@Browser-Extensions/@CH@focus-mode--FREE-VERSION/",
+            description: "Pick an element on any page and focus on the selected content.",
+            version: "1.0",
+            platforms: ["Chrome"],
+            badge: "Free"
+         },
+         {
+            name: "Queue Player MP3 WAV OGG",
+            path: "@Browser-Extensions/@CH@+@FF@/@FF@Queue-Player-MP3-WAV-OGG/",
+            description: "A local audio queue player for common browser-supported audio formats.",
+            platforms: ["Firefox", "Chrome"]
+         },
+         {
+            name: "GitHub README Simplifier",
+            path: "@Browser-Extensions/@CH@+@FF@/@CH@github-readme-simplifier/",
+            description: "Simplifies GitHub README pages for faster scanning and reading.",
+            platforms: ["Chrome", "Firefox"]
+         },
+         {
+            name: "Favicon Generator",
+            path: "@Browser-Extensions/@CH@+@FF@/@Favicon-Generator/",
+            description: "Generate extension and site favicon sizes from a source image.",
+            platforms: ["Chrome", "Firefox"]
+         },
+         {
+            name: "Mobile Power Overlay",
+            path: "@Browser-Extensions/@CH@+@FF@/@mobile-power-overlay/",
+            description: "Adds a mobile-style power overlay visual to browser pages.",
+            platforms: ["Chrome", "Firefox"]
+         },
+         {
+            name: "Twitter Filter",
+            path: "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
+            description: "Filters Twitter/X content through configurable extension controls.",
+            platforms: ["Firefox"]
+         },
+         {
+            name: "YGO Reveal Alerts",
+            path: "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
+            description: "Work-in-progress card reveal alert helper.",
+            platforms: ["Chrome"],
+            badge: "WIP"
+         },
+         {
+            name: "YT Playlist Manager",
+            path: "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/",
+            description: "Free Chrome helper for managing and exporting YouTube playlists.",
+            platforms: ["Chrome"],
+            badge: "Free"
+         },
+         {
+            name: "Translate2CSV",
+            path: "@Browser-Extensions/Translate2CSV/",
+            description: "Extract translation-oriented page data into CSV-friendly output.",
+            platforms: ["Chrome"]
+         },
+         {
+            name: "Page Watcher",
+            path: "@Browser-Extensions/page-watcher-extension/",
+            description: "Watch pages for changes from a Chromium browser.",
+            platforms: ["Chrome"]
+         },
+         {
+            name: "Firefox Page Watcher",
+            path: "@Browser-Extensions/ff-page-watcher-extension/",
+            description: "Firefox build of the page watching helper.",
+            platforms: ["Firefox"]
          }
+      ];
+
+      const challenges = [
+         { name: "Advice API App", path: "@chall/ch-aapi/index.html", description: "Advice generator layout and API interaction.", platforms: ["HTML", "CSS", "JS"] },
+         { name: "Newsletter Form", path: "@chall/ch-form/index.html", description: "Responsive signup and success state challenge.", platforms: ["HTML", "CSS", "JS"] },
+         { name: "Testimonials Grid", path: "@chall/ch-grid-5/index.html", description: "Responsive testimonial card grid.", platforms: ["HTML", "CSS"] },
+         { name: "3 Column Preview", path: "@chall/ch-row/index.html", description: "Responsive car category card layout.", platforms: ["HTML", "CSS"] },
+         { name: "Cookie Law Banner", path: "@chall/cookie-law/index.html", description: "Cookie consent UI prototype.", platforms: ["HTML", "CSS", "JS"] }
+      ];
+
+      const scripts = [
+         { name: "Blender LM Studio", path: "Blender-Extensions/blender_lmstudio.py", description: "Send prompts to LM Studio and execute returned Python inside Blender.", platforms: ["Blender", "Python"] },
+         { name: "Extension Creator", path: "win11powershell/create_extension.ps1", description: "PowerShell helper for scaffolding browser extension folders.", platforms: ["Windows", "PowerShell"] },
+         { name: "WAN2GP Colab", path: "@collab/wan2gp_on_colab/wan2gp_on_colab.py", description: "Google Colab automation helper.", platforms: ["Colab", "Python"] },
+         { name: "Math Scrape Kanji", path: "@collab/math+scrape+kanji/math+scrape+kanji.py", description: "Python scraping experiment for math and kanji data.", platforms: ["Python"] },
+         { name: "GitHub Trend Extract", path: "@collab/github-trend-extract/scrape_trendshift_html.ipynb", description: "Notebook for extracting trend data.", platforms: ["Notebook"] },
+         { name: "Song Prompt", path: "@collab/song-prompt/song-2promp.ipynb", description: "Notebook for song-to-prompt experimentation.", platforms: ["Notebook"] }
+      ];
+
+      const groups = [
+         ["extensions", extensions],
+         ["challenges", challenges],
+         ["scripts", scripts]
+      ];
+
+      function createCard(item) {
+         const card = document.createElement("article");
+         card.className = "card";
+         card.dataset.search = [item.name, item.description, item.badge, ...(item.platforms || [])].join(" ").toLowerCase();
+         const sourceHref = item.path.endsWith(".html") ? item.path : repoBase + item.path;
+         const primaryLabel = item.path.endsWith(".html") ? "Open" : "Source";
+
+         card.innerHTML = `
+            <div class="card-top">
+               <h3 class="card-title"><a href="${sourceHref}" ${item.path.endsWith(".html") ? "" : 'target="_blank" rel="noreferrer"'}>${item.name}</a></h3>
+               ${item.badge ? `<span class="badge ${item.badge.toLowerCase() === "pro" ? "pro" : ""}">${item.badge}</span>` : ""}
+            </div>
+            <p class="card-desc">${item.description}</p>
+            <div class="card-meta">
+               ${(item.platforms || []).map(platform => `<span class="pill">${platform}</span>`).join("")}
+               ${item.version ? `<span class="pill">v${item.version}</span>` : ""}
+            </div>
+            <div class="actions">
+               <a class="action primary" href="${sourceHref}" ${item.path.endsWith(".html") ? "" : 'target="_blank" rel="noreferrer"'}>${primaryLabel}</a>
+               ${item.path.includes("@Browser-Extensions") ? `<a class="action" href="${downloadBase}" target="_blank" rel="noreferrer">ZIP</a>` : ""}
+            </div>
+         `;
+         return card;
       }
 
-      function toggleExtensions() {
-         showAllExtensions = !showAllExtensions;
-         loadExtensions();
-      }
-
-      function loadChallenges() {
-         const container = document.getElementById("challenges");
-         container.innerHTML = "";
-         const list = showAllChallenges ? challengePaths : challengePaths.slice(0, 2);
-
-         list.forEach(path => {
-            const name = path.split("/")[1];
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                  <div class="card-title">
-                     <a href="${path}index.html">${name}</a>
-                  </div>
-                  <div class="card-desc">
-                     Frontend Mentor Challenge
-                  </div>
-        `;
-            container.appendChild(card);
+      function render() {
+         groups.forEach(([id, items]) => {
+            const container = document.getElementById(id);
+            container.innerHTML = "";
+            items.forEach(item => container.appendChild(createCard(item)));
          });
+
+         document.getElementById("stats").innerHTML = `
+            <div class="stat"><strong>${extensions.length}</strong><span>Extensions</span></div>
+            <div class="stat"><strong>${challenges.length}</strong><span>Frontend challenges</span></div>
+            <div class="stat"><strong>${scripts.length}</strong><span>Scripts and notebooks</span></div>
+            <div class="stat"><strong>1</strong><span>Pro build</span></div>
+         `;
       }
 
-      function toggleChallenges() {
-         showAllChallenges = !showAllChallenges;
-         loadChallenges();
+      function filterCards(query) {
+         const normalized = query.trim().toLowerCase();
+         let visible = 0;
+         document.querySelectorAll(".card").forEach(card => {
+            const match = !normalized || card.dataset.search.includes(normalized);
+            card.hidden = !match;
+            if (match) visible += 1;
+         });
+         document.getElementById("empty").style.display = visible ? "none" : "block";
       }
 
       async function loadReadme() {
-         const res = await fetch("/readme.md");
-         const text = await res.text();
-         document.getElementById("readme").textContent = text;
+         const readme = document.getElementById("readme");
+         readme.textContent = "Loading README...";
+         try {
+            const response = await fetch("readme.md");
+            readme.textContent = await response.text();
+         } catch (error) {
+            readme.textContent = "README could not be loaded from this environment.";
+         }
       }
 
-      function toggleColab() {
-         showAllColab = !showAllColab;
-         loadColab();
-      }
-
-      function loadColab() {
-         const container = document.getElementById("colab");
-         container.innerHTML = "";
-         const list = showAllColab ? colabPaths : colabPaths.slice(0, 2);
-         list.forEach(path => {
-            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path + ".py";
-            const name = path.split("/")[1];
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                     <div class="card-title">
-                        <a href="${gitBase}">${name}</a>
-                     </div>
-                     <div class="card-desc">
-                        Google Colab Notebook
-                     </div>
-               `;
-            container.appendChild(card);
-         });
-      }
-
-      function searchCards(query) {
-         query = query.toLowerCase();
-         document.querySelectorAll(".card").forEach(card => {
-            const text = card.innerText.toLowerCase();
-            if (text.includes(query)) {
-               card.style.display = "block";
-            } else {
-               card.style.display = "none";
-            }
-         });
-      }
-
-      function toggleBlenderExt() {
-         showAllBlenderExt = !showAllBlenderExt;
-         loadBlenderExt();
-      }
-
-      function loadBlenderExt() {
-         const container = document.getElementById("blender-ext");
-         container.innerHTML = "";
-         const list = showAllBlenderExt ? blenderExtPaths : blenderExtPaths.slice(0, 2);
-         list.forEach(path => {
-            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
-            const name = path.split("/")[1];
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                     <div class="card-title">
-                        <a href="${gitBase}" target="_blank">${name}</a>
-                     </div>
-                     <div class="card-desc">
-                        Blender Add-on (LM Studio Integration)
-                     </div>
-                     <div style="margin-top:10px">
-                        <a href="${gitBase}" target="_blank">
-                            <button>View Source</button>
-                        </a>
-                     </div>
-               `;
-            container.appendChild(card);
-         });
-      }
-      function toggleWinPowerShell() {
-         showAllWinPowerShell = !showAllWinPowerShell;
-         loadWinPowerShell();
-      }
-      function loadWinPowerShell() {
-         const container = document.getElementById("win-powershell");
-         container.innerHTML = "";
-         const list = showAllWinPowerShell ? WinPowerShellPaths : WinPowerShellPaths.slice(0, 2);
-         list.forEach(path => {
-            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
-            const name = path.split("/")[1];
-            const card = document.createElement("div");
-            card.className = "card";
-            card.innerHTML = `
-                     <div class="card-title">
-                        <a href="${gitBase}" target="_blank">${name}</a>
-                     </div>
-                     <div class="card-desc">
-                        Windows PowerShell Script to Create Browser Extensions
-                     </div>
-               `;
-            container.appendChild(card);
-         });
-      }
-
-      loadExtensions();
-      loadChallenges();
-      loadColab();
-      loadBlenderExt();
-      loadWinPowerShell();
+      render();
+      document.getElementById("search").addEventListener("input", event => filterCards(event.target.value));
+      document.getElementById("load-readme").addEventListener("click", loadReadme);
    </script>
 </body>
 
