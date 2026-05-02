@@ -10,10 +10,11 @@ bl_info = {
     "category": "Development",
 }
 
-import bpy
+import bpy  # type: ignore
 import urllib.request
 import json
 import re
+
 
 class LMSTUDIO_PG_properties(bpy.types.PropertyGroup):
     prompt: bpy.props.StringProperty(  # type: ignore
@@ -28,6 +29,7 @@ class LMSTUDIO_PG_properties(bpy.types.PropertyGroup):
         default="http://localhost:1234/v1/chat/completions",
     )
 
+
 class LMSTUDIO_OT_execute_prompt(bpy.types.Operator):
     bl_idname = "object.lmstudio_execute"
     bl_label = "Send and Execute"
@@ -35,7 +37,7 @@ class LMSTUDIO_OT_execute_prompt(bpy.types.Operator):
 
     def execute(self, context):
         props = context.scene.lmstudio_props
-        
+
         system_message = (
             "You are a Blender Python script generator. The user will ask you to perform a task in Blender. "
             "You must respond ONLY with valid, complete Blender Python code that accomplishes the task. "
@@ -45,27 +47,27 @@ class LMSTUDIO_OT_execute_prompt(bpy.types.Operator):
         )
 
         data = {
-            "model": "local-model", # The specific model name usually doesn't matter for LM Studio
+            "model": "local-model",  # The specific model name usually doesn't matter for LM Studio
             "messages": [
                 {"role": "system", "content": system_message},
-                {"role": "user", "content": props.prompt}
+                {"role": "user", "content": props.prompt},
             ],
-            "temperature": 0.1
+            "temperature": 0.1,
         }
 
         req = urllib.request.Request(
             props.api_url,
-            data=json.dumps(data).encode('utf-8'),
-            headers={'Content-Type': 'application/json'}
+            data=json.dumps(data).encode("utf-8"),
+            headers={"Content-Type": "application/json"},
         )
 
         try:
             with urllib.request.urlopen(req, timeout=30) as response:
-                result = json.loads(response.read().decode('utf-8'))
-                
+                result = json.loads(response.read().decode("utf-8"))
+
             if "choices" in result and len(result["choices"]) > 0:
                 reply = result["choices"][0]["message"]["content"]
-                
+
                 # Extract python code block if present
                 match = re.search(r"```python\s*(.*?)\s*```", reply, re.DOTALL)
                 if match:
@@ -74,32 +76,32 @@ class LMSTUDIO_OT_execute_prompt(bpy.types.Operator):
                     # Strip any backticks if no python block specified
                     code = reply.replace("```", "").strip()
 
-                self.report({'INFO'}, "Received response, executing...")
-                
+                self.report({"INFO"}, "Received response, executing...")
+
                 # Execute the code
                 try:
                     exec(code, globals(), locals())
-                    self.report({'INFO'}, "Executed successfully!")
+                    self.report({"INFO"}, "Executed successfully!")
                 except Exception as e:
-                    self.report({'ERROR'}, f"Execution Error: {str(e)}")
+                    self.report({"ERROR"}, f"Execution Error: {str(e)}")
                     print(f"Failed to execute code:\n{code}\nError: {e}")
             else:
-                self.report({'ERROR'}, "Invalid response from LM Studio")
+                self.report({"ERROR"}, "Invalid response from LM Studio")
 
         except urllib.error.URLError as e:
-            self.report({'ERROR'}, f"Connection Error: {str(e)}")
+            self.report({"ERROR"}, f"Connection Error: {str(e)}")
         except Exception as e:
-            self.report({'ERROR'}, f"Error: {str(e)}")
+            self.report({"ERROR"}, f"Error: {str(e)}")
 
-        return {'FINISHED'}
+        return {"FINISHED"}
 
 
 class LMSTUDIO_PT_panel(bpy.types.Panel):
     bl_label = "LM Studio"
     bl_idname = "VIEW3D_PT_lmstudio"
-    bl_space_type = 'VIEW_3D'
-    bl_region_type = 'UI'
-    bl_category = 'LM Studio'
+    bl_space_type = "VIEW_3D"
+    bl_region_type = "UI"
+    bl_category = "LM Studio"
 
     def draw(self, context):
         layout = self.layout
@@ -116,7 +118,8 @@ class LMSTUDIO_PT_panel(bpy.types.Panel):
         box.prop(props, "prompt", text="")
 
         layout.separator()
-        layout.operator(LMSTUDIO_OT_execute_prompt.bl_idname, icon='PLAY')
+        layout.operator(LMSTUDIO_OT_execute_prompt.bl_idname, icon="PLAY")
+
 
 classes = (
     LMSTUDIO_PG_properties,
@@ -124,15 +127,20 @@ classes = (
     LMSTUDIO_PT_panel,
 )
 
+
 def register():
     for cls in classes:
         bpy.utils.register_class(cls)
-    bpy.types.Scene.lmstudio_props = bpy.props.PointerProperty(type=LMSTUDIO_PG_properties)
+    bpy.types.Scene.lmstudio_props = bpy.props.PointerProperty(
+        type=LMSTUDIO_PG_properties
+    )
+
 
 def unregister():
     for cls in reversed(classes):
         bpy.utils.unregister_class(cls)
     del bpy.types.Scene.lmstudio_props
+
 
 if __name__ == "__main__":
     register()

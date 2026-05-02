@@ -166,6 +166,11 @@
       <button onclick="toggleBlenderExt()">Show more</button>
    </div>
    <div class="section">
+      <h2>⚡ Windows PowerShell</h2>
+      <div id="win-powershell"></div>
+      <button onclick="toggleWinPowerShell()">Show more</button>
+   </div>
+   <div class="section">
       <h2>🏆 Frontend Mentor Challenges</h2>
       <div id="challenges"></div>
       <button onclick="toggleChallenges()">Show more</button>
@@ -184,6 +189,7 @@
       let showAllChallenges = false;
       let showAllColab = false;
       let showAllBlenderExt = false;
+      let showAllWinPowerShell = false;
 
       const extensionPaths = [
          "@Browser-Extensions/@CH@+@FF@/@FF@Queue-Player-MP3-WAV-OGG/",
@@ -193,7 +199,9 @@
          "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
          "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
          "@Browser-Extensions/@CH@focus-mode--FREE-VERSION/",
-         "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/"
+         "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/",
+         "@Browser-Extensions/Translate2CSV/",
+         "@Browser-Extensions/ff-page-watcher-extension/"
       ];
 
       const challengePaths = [
@@ -212,6 +220,9 @@
 
       const blenderExtPaths = [
          "Blender-Extensions/blender_lmstudio.py"
+      ];
+      const WinPowerShellPaths = [
+         "win11powershell/create_extension.ps1"
       ];
 
       async function loadExtensions() {
@@ -364,11 +375,36 @@
             container.appendChild(card);
          });
       }
+      function toggleWinPowerShell() {
+         showAllWinPowerShell = !showAllWinPowerShell;
+         loadWinPowerShell();
+      }
+      function loadWinPowerShell() {
+         const container = document.getElementById("win-powershell");
+         container.innerHTML = "";
+         const list = showAllWinPowerShell ? WinPowerShellPaths : WinPowerShellPaths.slice(0, 2);
+         list.forEach(path => {
+            const gitBase = "https://github.com/HaSan1y/-browser-tools/tree/main/" + path;
+            const name = path.split("/")[1];
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                     <div class="card-title">
+                        <a href="${gitBase}" target="_blank">${name}</a>
+                     </div>
+                     <div class="card-desc">
+                        Windows PowerShell Script to Create Browser Extensions
+                     </div>
+               `;
+            container.appendChild(card);
+         });
+      }
 
       loadExtensions();
       loadChallenges();
       loadColab();
       loadBlenderExt();
+      loadWinPowerShell();
    </script>
 </body>
 

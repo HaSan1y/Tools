@@ -1,0 +1,8 @@
+﻿body {
+    font-family: Arial, sans-serif;
+    padding: 10px;
+}
+button {
+    padding: 8px 12px;
+    cursor: pointer;
+}
