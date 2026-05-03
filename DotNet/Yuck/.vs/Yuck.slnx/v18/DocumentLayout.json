@@ -1,0 +1,49 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{9A2AB7FE-0F4E-43B8-AAF9-50507652C031}|Yuck.csproj|h:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002Btools\\dotnet\\yuck\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{9A2AB7FE-0F4E-43B8-AAF9-50507652C031}|Yuck.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{de1fc918-f32e-4dd7-a915-1792a051f26b}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{74946827-37a0-11d2-a273-00c04f8ef4ff}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "App.xaml.cs",
+              "DocumentMoniker": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\App.xaml.cs",
+              "RelativeDocumentMoniker": "App.xaml.cs",
+              "ToolTip": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\App.xaml.cs",
+              "RelativeToolTip": "App.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-03T13:32:13.645Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

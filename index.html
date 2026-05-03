@@ -4,7 +4,8 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <meta name="description" content="A curated collection of browser extensions, frontend challenges, Blender tools, scripts, and Colab utilities by HaSan1y.">
+   <meta name="description"
+      content="A curated collection of browser extensions, frontend challenges, Blender tools, scripts, and Colab utilities by HaSan1y.">
    <title>HaSan1y Tools</title>
    <style>
       :root {
@@ -295,6 +296,7 @@
       }
 
       @media (max-width: 900px) {
+
          .grid,
          .stats {
             grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -325,10 +327,13 @@
       <div class="shell">
          <span class="eyebrow">Browser tools, scripts, and UI labs</span>
          <h1>HaSan1y Tools</h1>
-         <p>A polished launcher for browser extensions, Frontend Mentor challenges, Blender automation, PowerShell helpers, and Colab experiments.</p>
+         <p>A polished launcher for browser extensions, Frontend Mentor challenges, Blender automation, PowerShell
+            helpers, and Colab experiments.</p>
          <div class="toolbar">
-            <input class="search" id="search" type="search" placeholder="Search by name, platform, or category" autocomplete="off">
-            <a class="repo-link" href="https://github.com/HaSan1y/-browser-tools" target="_blank" rel="noreferrer">GitHub Repository</a>
+            <input class="search" id="search" type="search" placeholder="Search by name, platform, or category"
+               autocomplete="off">
+            <a class="repo-link" href="https://github.com/HaSan1y/-browser-tools" target="_blank"
+               rel="noreferrer">GitHub Repository</a>
          </div>
          <div class="stats" id="stats"></div>
       </div>
@@ -409,6 +414,20 @@
             platforms: ["Firefox", "Chrome"]
          },
          {
+            name: "Twitter Filter",
+            path: "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
+            description: "Filters Twitter/X content through configurable extension controls.",
+            platforms: ["Firefox"],
+            badge: "free"
+         },
+         {
+            name: "YT Playlist Manager",
+            path: "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/",
+            description: "Free Chrome helper for managing and exporting YouTube playlists.",
+            platforms: ["Chrome"],
+            badge: "Free"
+         },
+         {
             name: "GitHub README Simplifier",
             path: "@Browser-Extensions/@CH@+@FF@/@CH@github-readme-simplifier/",
             description: "Simplifies GitHub README pages for faster scanning and reading.",
@@ -427,26 +446,6 @@
             platforms: ["Chrome", "Firefox"]
          },
          {
-            name: "Twitter Filter",
-            path: "@Browser-Extensions/@CH@+@FF@/@Twitter-filter/",
-            description: "Filters Twitter/X content through configurable extension controls.",
-            platforms: ["Firefox"]
-         },
-         {
-            name: "YGO Reveal Alerts",
-            path: "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
-            description: "Work-in-progress card reveal alert helper.",
-            platforms: ["Chrome"],
-            badge: "WIP"
-         },
-         {
-            name: "YT Playlist Manager",
-            path: "@Browser-Extensions/@CH@YT-playlist-manager--FREE-VERSION/",
-            description: "Free Chrome helper for managing and exporting YouTube playlists.",
-            platforms: ["Chrome"],
-            badge: "Free"
-         },
-         {
             name: "Translate2CSV",
             path: "@Browser-Extensions/Translate2CSV/",
             description: "Extract translation-oriented page data into CSV-friendly output.",
@@ -463,7 +462,14 @@
             path: "@Browser-Extensions/ff-page-watcher-extension/",
             description: "Firefox build of the page watching helper.",
             platforms: ["Firefox"]
-         }
+         },
+         {
+            name: "YGO Reveal Alerts",
+            path: "@Browser-Extensions/@CH@YGO-Reveal-Alerts/",
+            description: "Work-in-progress card reveal alert helper.",
+            platforms: ["Chrome"],
+            badge: "WIP"
+         },
       ];
 
       const challenges = [
@@ -475,12 +481,13 @@
       ];
 
       const scripts = [
+         { name: "Yuck", path: "DotNet/yuck/yuck.cs", description: "Yuck learning helper, add Pictures to your Yuck Player C#", platforms: ["DotNet"], badge: "Pro" },
          { name: "Blender LM Studio", path: "Blender-Extensions/blender_lmstudio.py", description: "Send prompts to LM Studio and execute returned Python inside Blender.", platforms: ["Blender", "Python"] },
          { name: "Extension Creator", path: "win11powershell/create_extension.ps1", description: "PowerShell helper for scaffolding browser extension folders.", platforms: ["Windows", "PowerShell"] },
          { name: "WAN2GP Colab", path: "@collab/wan2gp_on_colab/wan2gp_on_colab.py", description: "Google Colab automation helper.", platforms: ["Colab", "Python"] },
          { name: "Math Scrape Kanji", path: "@collab/math+scrape+kanji/math+scrape+kanji.py", description: "Python scraping experiment for math and kanji data.", platforms: ["Python"] },
-         { name: "GitHub Trend Extract", path: "@collab/github-trend-extract/scrape_trendshift_html.ipynb", description: "Notebook for extracting trend data.", platforms: ["Notebook"] },
-         { name: "Song Prompt", path: "@collab/song-prompt/song-2promp.ipynb", description: "Notebook for song-to-prompt experimentation.", platforms: ["Notebook"] }
+         { name: "GitHub Trend Extract", path: "@collab/github-trend-extract/scrape_trendshift_html.ipynb", description: "Notebook for extracting trend data.", platforms: ["Notebook"], badge: "WIP" },
+         { name: "Song Prompt", path: "@collab/song-prompt/song-2promp.ipynb", description: "Notebook for song-to-prompt experimentation.", platforms: ["Notebook"], badge: "WIP" },
       ];
 
       const groups = [
