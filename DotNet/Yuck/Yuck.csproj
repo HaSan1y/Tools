@@ -3,7 +3,7 @@
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net10.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
+    <Nullable>annotations</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
@@ -13,7 +13,9 @@
   <ItemGroup>
     <Resource Include="Assets\yuck.ico" />
   </ItemGroup>
-
+<PropertyGroup>
+    <ApplicationIcon>Assets\yuck.ico</ApplicationIcon>
+</PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="Syncfusion.Tools.Windows" Version="33.2.4" />

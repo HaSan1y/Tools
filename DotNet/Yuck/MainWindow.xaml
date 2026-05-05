@@ -28,8 +28,17 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Border CornerRadius="12" Background="#222">
-            <Image x:Name="CardImage" Stretch="Uniform" Opacity="0"/>
+        <Border CornerRadius="8" Background="#AA1E1E1E" ClipToBounds="True">
+            <Grid>
+                <Image x:Name="CardImage" RenderTransformOrigin="0.5,0.5">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform x:Name="ImageScale" ScaleX="1" ScaleY="1"/>
+                            <TranslateTransform x:Name="ImageTranslate"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+            </Grid>
         </Border>
 
         <TextBlock x:Name="StatusText"
@@ -40,6 +49,7 @@
                    FontSize="12"/>
 
         <Border Grid.Row="2" CornerRadius="8" Background="#202020" BorderBrush="#333" BorderThickness="1">
+            
             <ListBox x:Name="Playlist"
                      Background="Transparent"
                      BorderThickness="0"

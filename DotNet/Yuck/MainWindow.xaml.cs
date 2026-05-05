@@ -5,13 +5,19 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 using Newtonsoft.Json;
+using MouseEventArgs = System.Windows.Input.MouseEventArgs;
+using Point = System.Windows.Point;
 using WinForms = System.Windows.Forms;
 
 namespace Yuck
 {
+
     public partial class MainWindow : Window
     {
-        string folder = "C:\\anki_images";
+        string folder = Path.Combine(
+    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+    "Yuck"
+);
         string? saveFile;
         string? listFile;
         List<Card> cards = new();
@@ -21,13 +27,28 @@ namespace Yuck
         bool isReallyClosing;
         bool hideAfterStartupAdd;
         bool isPlaylistSelectionInternal;
+        Point lastPos;
+        bool isDragging = false;
 
+        double zoom = 1.0;
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e)
+        {
+            if (e.Delta > 0)
+                zoom += 0.1;
+            else
+                zoom -= 0.1;
+
+            zoom = Math.Max(0.2, Math.Min(zoom, 5)); // limits
+
+            ImageScale.ScaleX = zoom;
+            ImageScale.ScaleY = zoom;
+        }
         public MainWindow(string[]? startupPaths = null)
         {
             InitializeComponent();
-
             Directory.CreateDirectory(folder);
-            trayIcon = CreateTrayIcon();
+
+            trayIcon = ((App)System.Windows.Application.Current).TrayIcon;
             LoadFolder(folder);
 
             if (startupPaths is { Length: > 0 })
@@ -42,24 +63,7 @@ namespace Yuck
 
             KeyDown += OnKey;
             Loaded += OnLoaded;
-        }
-
-        WinForms.NotifyIcon CreateTrayIcon()
-        {
-            var menu = new WinForms.ContextMenuStrip();
-            menu.Items.Add("Show Yuck", null, (_, _) => ShowFromTray());
-            menu.Items.Add("Open image folder", null, (_, _) => OpenImageFolder());
-            menu.Items.Add("Exit", null, (_, _) => ExitApp());
-
-            var icon = new WinForms.NotifyIcon
-            {
-                Text = "Yuck - add images from anywhere",
-                Icon = new System.Drawing.Icon(System.Windows.Application.GetResourceStream(new Uri("pack://application:,,,/Assets/yuck.ico")).Stream),
-                ContextMenuStrip = menu,
-                Visible = true
-            };
-            icon.DoubleClick += (_, _) => ShowFromTray();
-            return icon;
+            this.MouseWheel += Window_MouseWheel;
         }
 
         void LoadFolder(string path)
@@ -143,6 +147,7 @@ namespace Yuck
             {
                 current = null;
                 CardImage.Source = null;
+
             }
 
             SaveData();
@@ -160,6 +165,9 @@ namespace Yuck
         void ShowNext()
         {
             var removed = PruneMissingCards();
+            zoom = 1.0;
+            ImageScale.ScaleX = 1;
+            ImageScale.ScaleY = 1;
             if (cards.Count == 0)
             {
                 current = null;
@@ -214,6 +222,9 @@ namespace Yuck
             var index = cards.IndexOf(card) + 1;
             StatusText.Text = loadError ?? $"{index}/{cards.Count} | Interval: {current.Interval}s";
             SelectCurrentInPlaylist();
+            CardImage.MouseDown += Image_MouseDown;
+            CardImage.MouseUp += Image_MouseUp;
+            CardImage.MouseMove += Image_MouseMove;
         }
 
         void SelectCurrentInPlaylist()
@@ -226,6 +237,7 @@ namespace Yuck
 
         bool TryDisplayCurrentImage(out string? loadError)
         {
+
             loadError = null;
             if (current == null) return false;
 
@@ -561,13 +573,6 @@ namespace Yuck
                 || extension.Equals(".yucklist", StringComparison.OrdinalIgnoreCase);
         }
 
-        void ShowFromTray()
-        {
-            Show();
-            WindowState = WindowState.Normal;
-            Activate();
-        }
-
         void OpenImageFolder()
         {
             Directory.CreateDirectory(folder);
@@ -577,22 +582,41 @@ namespace Yuck
                 UseShellExecute = true
             });
         }
-
-        void ExitApp()
-        {
-            isReallyClosing = true;
-            trayIcon.Visible = false;
-            trayIcon.Dispose();
-            System.Windows.Application.Current.Shutdown();
-        }
-
         private void Window_Closing(object? sender, System.ComponentModel.CancelEventArgs e)
         {
             if (isReallyClosing) return;
 
             e.Cancel = true;
             Hide();
-            trayIcon.ShowBalloonTip(2000, "Yuck is still running", "Drop images, folders or lists onto the window.", WinForms.ToolTipIcon.Info);
+            //trayIcon.ShowBalloonTip(2000, "Yuck is still running", "Drop images, folders or lists onto the window.", WinForms.ToolTipIcon.Info);
+        }
+
+
+        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = true;
+            lastPos = e.GetPosition(this);
+            Mouse.Capture((IInputElement)sender);
+        }
+
+        private void Image_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            isDragging = false;
+            Mouse.Capture(null);
+        }
+
+        private void Image_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (!isDragging) return;
+
+            var pos = e.GetPosition(this);
+            var dx = pos.X - lastPos.X;
+            var dy = pos.Y - lastPos.Y;
+
+            ImageTranslate.X += dx;
+            ImageTranslate.Y += dy;
+
+            lastPos = pos;
         }
     }
 

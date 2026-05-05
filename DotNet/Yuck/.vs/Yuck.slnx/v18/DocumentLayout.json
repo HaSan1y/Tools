@@ -3,8 +3,12 @@
   "WorkspaceRootPath": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{9A2AB7FE-0F4E-43B8-AAF9-50507652C031}|Yuck.csproj|h:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002Btools\\dotnet\\yuck\\app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{9A2AB7FE-0F4E-43B8-AAF9-50507652C031}|Yuck.csproj|solutionrelative:app.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{D160C242-F142-5BF7-2004-BBAE79F4FBA3}|Yuck.csproj|h:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002Btools\\dotnet\\yuck\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{D160C242-F142-5BF7-2004-BBAE79F4FBA3}|Yuck.csproj|solutionrelative:mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D160C242-F142-5BF7-2004-BBAE79F4FBA3}|Yuck.csproj|h:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002Btools\\dotnet\\yuck\\mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D160C242-F142-5BF7-2004-BBAE79F4FBA3}|Yuck.csproj|solutionrelative:mainwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -31,15 +35,26 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "App.xaml.cs",
-              "DocumentMoniker": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\App.xaml.cs",
-              "RelativeDocumentMoniker": "App.xaml.cs",
-              "ToolTip": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\App.xaml.cs",
-              "RelativeToolTip": "App.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T13:32:13.645Z",
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "MainWindow.xaml",
+              "ToolTip": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\MainWindow.xaml",
+              "RelativeToolTip": "MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-05-05T12:05:20.068Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "MainWindow.xaml.cs",
+              "ToolTip": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\MainWindow.xaml.cs",
+              "RelativeToolTip": "MainWindow.xaml.cs",
+              "ViewState": "AgIAAMYAAAAAAAAAAAAAANgAAAANAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-05T10:10:34.95Z"
             }
           ]
         }
