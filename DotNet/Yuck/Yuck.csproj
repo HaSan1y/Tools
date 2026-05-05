@@ -7,19 +7,21 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <UseWindowsForms>true</UseWindowsForms>
-    <ApplicationIcon>Assets\yuck.ico</ApplicationIcon>
+    <ApplicationIcon>Assets/yuck.ico</ApplicationIcon>
+  <SelfContained>true</SelfContained>
+  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+  <PublishSingleFile>true</PublishSingleFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\yuck.ico" />
+    <None Include="Assets/yuck.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
-<PropertyGroup>
-    <ApplicationIcon>Assets\yuck.ico</ApplicationIcon>
-</PropertyGroup>
+	
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="33.2.4" />
-    <PackageReference Include="System.Text.Json" Version="10.0.7" />
   </ItemGroup>
 
 </Project>
+ 

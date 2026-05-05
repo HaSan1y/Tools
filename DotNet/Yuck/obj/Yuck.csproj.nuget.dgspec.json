@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj": {}
+    "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj": {}
   },
   "projects": {
-    "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj": {
+    "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
+        "projectUniqueName": "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
         "projectName": "Yuck",
-        "projectPath": "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
+        "projectPath": "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
         "packagesPath": "C:\\Users\\wieso\\.nuget\\packages\\",
-        "outputPath": "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\obj\\",
+        "outputPath": "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -53,17 +53,15 @@
           "framework": "net10.0-windows7.0",
           "targetAlias": "net10.0-windows",
           "dependencies": {
+            "Microsoft.NET.ILLink.Tasks": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[10.0.5, )",
+              "autoReferenced": true
+            },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.4, )"
-            },
-            "Syncfusion.Tools.Windows": {
-              "target": "Package",
-              "version": "[33.2.4, )"
-            },
-            "System.Text.Json": {
-              "target": "Package",
-              "version": "[10.0.7, )"
             }
           },
           "imports": [
@@ -77,6 +75,20 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[10.0.5, 10.0.5]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[10.0.5, 10.0.5]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[10.0.5, 10.0.5]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
@@ -376,6 +388,11 @@
             "System.Xml.XPath": "(,4.3.32767]",
             "System.Xml.XPath.XDocument": "(,5.0.32767]"
           }
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
         }
       }
     }

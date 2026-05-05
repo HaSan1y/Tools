@@ -14,11 +14,9 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.props" Condition="Exists('$(NuGetPackageRoot)microsoft.winforms.designer.sdk\1.6.0\build\netcoreapp3.1\Microsoft.WinForms.Designer.SDK.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.net.illink.tasks\10.0.5\build\Microsoft.NET.ILLink.Tasks.props" Condition="Exists('$(NuGetPackageRoot)microsoft.net.illink.tasks\10.0.5\build\Microsoft.NET.ILLink.Tasks.props')" />
   </ImportGroup>
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <PkgSyncfusion_Shared_Base Condition=" '$(PkgSyncfusion_Shared_Base)' == '' ">C:\Users\wieso\.nuget\packages\syncfusion.shared.base\33.2.4</PkgSyncfusion_Shared_Base>
-    <PkgSyncfusion_Grid_Windows Condition=" '$(PkgSyncfusion_Grid_Windows)' == '' ">C:\Users\wieso\.nuget\packages\syncfusion.grid.windows\33.2.4</PkgSyncfusion_Grid_Windows>
-    <PkgSyncfusion_Tools_Windows Condition=" '$(PkgSyncfusion_Tools_Windows)' == '' ">C:\Users\wieso\.nuget\packages\syncfusion.tools.windows\33.2.4</PkgSyncfusion_Tools_Windows>
+    <PkgMicrosoft_NET_ILLink_Tasks Condition=" '$(PkgMicrosoft_NET_ILLink_Tasks)' == '' ">C:\Users\wieso\.nuget\packages\microsoft.net.illink.tasks\10.0.5</PkgMicrosoft_NET_ILLink_Tasks>
   </PropertyGroup>
 </Project>

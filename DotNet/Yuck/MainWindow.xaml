@@ -11,7 +11,6 @@
         MinHeight="460"
         MinWidth="360"
         Background="#181818"
-        Icon="Assets/yuck.ico"
         AllowDrop="True"
         Drop="Window_Drop"
         DragOver="Window_DragOver"
@@ -19,56 +18,88 @@
         ResizeMode="CanResizeWithGrip"
         WindowStyle="ToolWindow"
         Closing="Window_Closing">
-    <Grid Margin="10">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+        <Grid Margin="10">
+                <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-        <Border CornerRadius="8" Background="#AA1E1E1E" ClipToBounds="True">
-            <Grid>
-                <Image x:Name="CardImage" RenderTransformOrigin="0.5,0.5">
-                    <Image.RenderTransform>
-                        <TransformGroup>
-                            <ScaleTransform x:Name="ImageScale" ScaleX="1" ScaleY="1"/>
-                            <TranslateTransform x:Name="ImageTranslate"/>
-                        </TransformGroup>
-                    </Image.RenderTransform>
-                </Image>
-            </Grid>
-        </Border>
+                <Border CornerRadius="8"
+                        Background="#AA1E1E1E"
+                        ClipToBounds="True">
+                        <Grid>
+                                <Image x:Name="CardImage"
+                                       RenderTransformOrigin="0.5,0.5">
+                                        <Image.RenderTransform>
+                                                <TransformGroup>
+                                                        <ScaleTransform x:Name="ImageScale"
+                                                                        ScaleX="1"
+                                                                        ScaleY="1"/>
+                                                        <TranslateTransform x:Name="ImageTranslate"/>
+                                                </TransformGroup>
+                                        </Image.RenderTransform>
+                                </Image>
+                        </Grid>
+                </Border>
 
-        <TextBlock x:Name="StatusText"
-                   Grid.Row="1"
-                   Foreground="#aaa"
-                   Margin="0,8"
-                   Text="Drop images, folders or lists here"
-                   FontSize="12"/>
+                <TextBlock x:Name="StatusText"
+                           Grid.Row="1"
+                           Foreground="#aaa"
+                           Margin="0,8"
+                           Text="Drop images, folders or lists here"
+                           FontSize="12"/>
 
-        <Border Grid.Row="2" CornerRadius="8" Background="#202020" BorderBrush="#333" BorderThickness="1">
-            
-            <ListBox x:Name="Playlist"
-                     Background="Transparent"
-                     BorderThickness="0"
-                     Foreground="#ddd"
-                     SelectionChanged="Playlist_SelectionChanged"
-                     DisplayMemberPath="Name"/>
-        </Border>
+                <Border Grid.Row="2"
+                        CornerRadius="8"
+                        Background="#202020"
+                        BorderBrush="#333"
+                        BorderThickness="1">
 
-        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,8,0,0">
-            <Button Content="Load list" MinWidth="78" Margin="0,0,5,0" Click="LoadList_Click"/>
-            <Button Content="Update" MinWidth="78" Margin="0,0,5,0" Click="UpdateItem_Click"/>
-            <Button Content="Delete" MinWidth="78" Margin="0,0,5,0" Click="DeleteItem_Click"/>
-            <Button Content="Folder" MinWidth="78" Click="OpenFolder_Click"/>
-        </StackPanel>
+                        <ListBox x:Name="Playlist"
+                                 Background="Transparent"
+                                 BorderThickness="0"
+                                 Foreground="#ddd"
+                                 SelectionChanged="Playlist_SelectionChanged"
+                                 DisplayMemberPath="Name"/>
+                </Border>
 
-        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,8,0,0">
-            <Button Content="Again" Width="80" Margin="0,0,5,0" Click="Again_Click"/>
-            <Button Content="Good" Width="80" Margin="0,0,5,0" Click="Good_Click"/>
-            <Button Content="Easy" Width="80" Click="Easy_Click"/>
-        </StackPanel>
-    </Grid>
+                <StackPanel Grid.Row="3"
+                            Orientation="Horizontal"
+                            Margin="0,8,0,0">
+                        <Button Content="Load list"
+                                MinWidth="78"
+                                Margin="0,0,5,0"
+                                Click="LoadList_Click"/>
+                        <Button Content="Update"
+                                MinWidth="78"
+                                Margin="0,0,5,0"
+                                Click="UpdateItem_Click"/>
+                        <Button Content="Delete"
+                                MinWidth="78"
+                                Margin="0,0,5,0"
+                                Click="DeleteItem_Click"/>
+                        <Button Content="Folder"
+                                MinWidth="78"
+                                Click="OpenFolder_Click"/>
+                </StackPanel>
+
+                <StackPanel Grid.Row="4"
+                            Orientation="Horizontal"
+                            Margin="0,8,0,0">
+                        <Button Content="Again"
+                                Width="80"
+                                Margin="0,0,5,0"
+                                Click="Again_Click"/>
+                        <Button Content="Good"
+                                Width="80"
+                                Margin="0,0,5,0"
+                                Click="Good_Click"/>
+                        <Button Content="Easy"
+                                Width="80"
+                                Click="Easy_Click"/>
+                </StackPanel>
+        </Grid>
 </Window>

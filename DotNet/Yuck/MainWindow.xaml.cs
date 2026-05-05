@@ -591,6 +591,12 @@ namespace Yuck
             //trayIcon.ShowBalloonTip(2000, "Yuck is still running", "Drop images, folders or lists onto the window.", WinForms.ToolTipIcon.Info);
         }
 
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            isReallyClosing = true;
+            Close();
+        }
+
 
         private void Image_MouseDown(object sender, MouseButtonEventArgs e)
         {
