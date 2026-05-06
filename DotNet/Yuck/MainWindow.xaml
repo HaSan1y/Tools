@@ -129,6 +129,7 @@
                                 <ComboBoxItem Content="Black"/>
                                 <ComboBoxItem Content="Pink"/>
                                 <ComboBoxItem Content="Neon"/>
+                                <ComboBoxItem Content="Glass"/>
                         </ComboBox>
                 </Grid>
 

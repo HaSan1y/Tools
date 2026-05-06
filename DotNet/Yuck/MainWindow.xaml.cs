@@ -36,6 +36,7 @@ namespace Yuck
         bool isPlaylistSelectionInternal;
         bool isPaused;
         string currentTheme = "Black";
+        int nonFatalIssues;
         Point lastPos;
         bool isDragging = false;
 
@@ -94,11 +95,13 @@ namespace Yuck
             settingsFile = Path.Combine(folder, "settings.json");
             thumbsFolder = Path.Combine(folder, "thumbs");
             Directory.CreateDirectory(thumbsFolder);
+            EnsurePlaceholderThumbnails();
 
             LoadSettings();
             ThemeSelector.SelectedIndex = currentTheme.Equals("Pink", StringComparison.OrdinalIgnoreCase)
                 ? 1
-                : currentTheme.Equals("Neon", StringComparison.OrdinalIgnoreCase) ? 2 : 0;
+                : currentTheme.Equals("Neon", StringComparison.OrdinalIgnoreCase) ? 2
+                : currentTheme.Equals("Glass", StringComparison.OrdinalIgnoreCase) ? 3 : 0;
             PauseButton.Content = isPaused ? "Resume" : "Pause";
 
             var files = new List<string>();
@@ -623,12 +626,23 @@ namespace Yuck
         int AddMedia(IEnumerable<string> files)
         {
             var added = 0;
+            var skipped = 0;
             var known = cards.Select(c => c.Path).ToHashSet(StringComparer.OrdinalIgnoreCase);
             foreach (var file in files.Where(IsSupportedMediaFile))
             {
                 if (!File.Exists(file)) continue;
 
-                var target = CopyIntoManagedStorage(file);
+                string target;
+                try
+                {
+                    target = CopyIntoManagedStorage(file);
+                }
+                catch (Exception ex)
+                {
+                    skipped++;
+                    ReportNonFatal($"Could not import {Path.GetFileName(file)}", ex);
+                    continue;
+                }
                 if (known.Contains(target)) continue;
 
                 cards.Add(NewCard(target));
@@ -640,6 +654,10 @@ namespace Yuck
             if (added > 0)
             {
                 SaveData();
+            }
+            if (skipped > 0)
+            {
+                StatusText.Text = $"Added {added}, skipped {skipped} file{(skipped == 1 ? "" : "s")} (see status)";
             }
 
             return added;
@@ -746,7 +764,7 @@ namespace Yuck
             }
         }
 
-        static Card NewCard(string path) => new()
+        Card NewCard(string path) => new()
         {
             Path = path,
             Ease = 2.5,
@@ -756,10 +774,21 @@ namespace Yuck
             ThumbnailPath = GetThumbnailPathForCard(path)
         };
 
-        static string? GetThumbnailPathForCard(string path)
+        string? GetThumbnailPathForCard(string path)
         {
             var type = GetMediaType(path);
-            return type == MediaType.Image ? path : null;
+            if (type == MediaType.Image)
+            {
+                return path;
+            }
+
+            if (string.IsNullOrWhiteSpace(thumbsFolder))
+            {
+                return null;
+            }
+
+            var fallback = Path.Combine(thumbsFolder, $"placeholder-{type.ToString().ToLowerInvariant()}.png");
+            return File.Exists(fallback) ? fallback : null;
         }
 
         static bool IsImageFile(string path)
@@ -1252,6 +1281,20 @@ namespace Yuck
                 return;
             }
 
+            if (themeName.Equals("Glass", StringComparison.OrdinalIgnoreCase))
+            {
+                SetThemeColors(
+                    "#0E121A",
+                    "#901B2430",
+                    "#202A38",
+                    "#4A5C74",
+                    "#EEF5FF",
+                    "#B4C8E3",
+                    "#2F3E56",
+                    "#617A9E");
+                return;
+            }
+
             SetThemeColors(
                 "#111319",
                 "#B011141D",
@@ -1298,9 +1341,11 @@ namespace Yuck
             }
             catch (IOException)
             {
+                ReportNonFatal("Could not read settings", null);
             }
             catch (JsonException)
             {
+                ReportNonFatal("Settings file was invalid and was ignored", null);
             }
         }
 
@@ -1321,10 +1366,66 @@ namespace Yuck
             }
             catch (IOException)
             {
+                ReportNonFatal("Could not save settings", null);
             }
             catch (UnauthorizedAccessException)
             {
+                ReportNonFatal("No permission to save settings", null);
             }
+        }
+
+        void EnsurePlaceholderThumbnails()
+        {
+            if (string.IsNullOrWhiteSpace(thumbsFolder)) return;
+            CreatePlaceholderThumbnail(MediaType.Video, "VIDEO", "#2F4369");
+            CreatePlaceholderThumbnail(MediaType.Text, "TEXT", "#4D3D78");
+            CreatePlaceholderThumbnail(MediaType.Pdf, "PDF", "#7A2D3A");
+            CreatePlaceholderThumbnail(MediaType.Unknown, "FILE", "#4C5969");
+        }
+
+        void CreatePlaceholderThumbnail(MediaType type, string label, string accentColor)
+        {
+            if (string.IsNullOrWhiteSpace(thumbsFolder)) return;
+            var target = Path.Combine(thumbsFolder, $"placeholder-{type.ToString().ToLowerInvariant()}.png");
+            if (File.Exists(target)) return;
+
+            try
+            {
+                const int width = 128;
+                const int height = 128;
+                var visual = new DrawingVisual();
+                using var dc = visual.RenderOpen();
+                dc.DrawRectangle((SolidColorBrush)new BrushConverter().ConvertFromString("#233047"), null, new Rect(0, 0, width, height));
+                dc.DrawRoundedRectangle((SolidColorBrush)new BrushConverter().ConvertFromString(accentColor), null, new Rect(12, 12, 104, 104), 14, 14);
+                var text = new FormattedText(
+                    label,
+                    System.Globalization.CultureInfo.InvariantCulture,
+                    System.Windows.FlowDirection.LeftToRight,
+                    new Typeface("Segoe UI Bold"),
+                    24,
+                    System.Windows.Media.Brushes.White,
+                    1.0);
+                dc.DrawText(text, new Point((width - text.Width) / 2, (height - text.Height) / 2));
+
+                var rtb = new RenderTargetBitmap(width, height, 96, 96, PixelFormats.Pbgra32);
+                rtb.Render(visual);
+                var encoder = new PngBitmapEncoder();
+                encoder.Frames.Add(BitmapFrame.Create(rtb));
+                using var fs = new FileStream(target, FileMode.Create, FileAccess.Write, FileShare.None);
+                encoder.Save(fs);
+            }
+            catch (Exception ex)
+            {
+                ReportNonFatal("Could not create placeholder thumbnails", ex);
+            }
+        }
+
+        void ReportNonFatal(string message, Exception? ex)
+        {
+            nonFatalIssues++;
+            StatusText.Text = ex == null
+                ? $"{message} (issue {nonFatalIssues})"
+                : $"{message}: {ex.Message} (issue {nonFatalIssues})";
         }
 
 

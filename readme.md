@@ -23,7 +23,7 @@ Most extensions target one or more of Chrome, Firefox, Edge, Kiwi, and Brave. Ch
 - Blender LM Studio Prompt Executor - sends AI tasks to LM Studio and executes the returned Python in Blender.
 - PowerShell Extension Creator - scaffolds browser extension folders on Windows.
 - Colab notebooks and scripts - experiments for scraping, prompts, and generation workflows.
-- Yuck Picture Player C#
+- Yuck - Smart Picture Learning for Windows
 
 ## Frontend Challenges
 
