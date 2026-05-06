@@ -4,7 +4,6 @@ H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Y
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Yuck.runtimeconfig.json
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Yuck.dll
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Yuck.pdb
-H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Newtonsoft.Json.dll
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.CSharp.dll
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.VisualBasic.Core.dll
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Win32.Primitives.dll
@@ -492,3 +491,12 @@ H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Y
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\obj\Debug\net10.0-windows\win-x64\Yuck.pdb
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\obj\Debug\net10.0-windows\win-x64\Yuck.genruntimeconfig.cache
 H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\obj\Debug\net10.0-windows\win-x64\ref\Yuck.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\obj\Debug\net10.0-windows\win-x64\Yuck_Content.g.cs
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\runtimes\win-x64\native\WebView2Loader.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\WebView2Loader.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.Core.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.WinForms.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.Wpf.dll
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.Core.xml
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.WinForms.xml
+H:\codeing\html+javascript\+git+github+docker\git\github-desktop\+Tools\DotNet\Yuck\bin\Debug\net10.0-windows\win-x64\Microsoft.Web.WebView2.Wpf.xml

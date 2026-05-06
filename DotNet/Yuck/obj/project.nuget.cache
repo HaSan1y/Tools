@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "eXLJ61euPkE=",
+  "dgSpecHash": "l0Z2C1r5CnE=",
   "success": true,
-  "projectFilePath": "h:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
+  "projectFilePath": "H:\\codeing\\html+javascript\\+git+github+docker\\git\\github-desktop\\+Tools\\DotNet\\Yuck\\Yuck.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\wieso\\.nuget\\packages\\microsoft.net.illink.tasks\\10.0.5\\microsoft.net.illink.tasks.10.0.5.nupkg.sha512",
-    "C:\\Users\\wieso\\.nuget\\packages\\newtonsoft.json\\13.0.4\\newtonsoft.json.13.0.4.nupkg.sha512",
+    "C:\\Users\\wieso\\.nuget\\packages\\microsoft.web.webview2\\1.0.3179.45\\microsoft.web.webview2.1.0.3179.45.nupkg.sha512",
     "C:\\Users\\wieso\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x64\\10.0.5\\microsoft.netcore.app.runtime.win-x64.10.0.5.nupkg.sha512",
     "C:\\Users\\wieso\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x64\\10.0.5\\microsoft.windowsdesktop.app.runtime.win-x64.10.0.5.nupkg.sha512",
     "C:\\Users\\wieso\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x64\\10.0.5\\microsoft.aspnetcore.app.runtime.win-x64.10.0.5.nupkg.sha512"

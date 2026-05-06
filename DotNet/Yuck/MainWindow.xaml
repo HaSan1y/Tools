@@ -3,14 +3,15 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf"
         xmlns:local="clr-namespace:Yuck"
         mc:Ignorable="d"
         Title="Yuck"
-        Height="560"
-        Width="420"
+        Height="600"
+        Width="480"
         MinHeight="460"
         MinWidth="360"
-        Background="#181818"
+        Background="#111319"
         AllowDrop="True"
         Drop="Window_Drop"
         DragOver="Window_DragOver"
@@ -18,7 +19,46 @@
         ResizeMode="CanResizeWithGrip"
         WindowStyle="ToolWindow"
         Closing="Window_Closing">
-        <Grid Margin="10">
+        <Window.Resources>
+                <SolidColorBrush x:Key="AppBgBrush" Color="#111319"/>
+                <SolidColorBrush x:Key="CardBgBrush" Color="#B011141D"/>
+                <SolidColorBrush x:Key="PanelBgBrush" Color="#1A2230"/>
+                <SolidColorBrush x:Key="PanelBorderBrush" Color="#303C52"/>
+                <SolidColorBrush x:Key="PrimaryTextBrush" Color="#DCE7FF"/>
+                <SolidColorBrush x:Key="SecondaryTextBrush" Color="#9BB0D1"/>
+                <SolidColorBrush x:Key="ButtonBgBrush" Color="#2A3142"/>
+                <SolidColorBrush x:Key="ButtonBorderBrush" Color="#3A455D"/>
+                <Style TargetType="Button">
+                        <Setter Property="Background" Value="{DynamicResource ButtonBgBrush}"/>
+                        <Setter Property="Foreground" Value="{DynamicResource PrimaryTextBrush}"/>
+                        <Setter Property="BorderBrush" Value="{DynamicResource ButtonBorderBrush}"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Padding" Value="8,5"/>
+                        <Setter Property="Cursor" Value="Hand"/>
+                        <Setter Property="Margin" Value="4,0,0,0"/>
+                        <Setter Property="MinHeight" Value="30"/>
+                </Style>
+                <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        <Setter Property="Padding" Value="4"/>
+                </Style>
+                <Style TargetType="ScrollBar">
+                        <Setter Property="Opacity" Value="0.15"/>
+                        <Setter Property="Width" Value="6"/>
+                        <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Setter Property="Width" Value="10"/>
+                                </Trigger>
+                                <Trigger Property="IsMouseCaptureWithin" Value="True">
+                                        <Setter Property="Opacity" Value="1"/>
+                                        <Setter Property="Width" Value="10"/>
+                                </Trigger>
+                        </Style.Triggers>
+                </Style>
+        </Window.Resources>
+        <Grid Margin="10"
+              Background="{DynamicResource AppBgBrush}">
                 <Grid.RowDefinitions>
                         <RowDefinition Height="2*"/>
                         <RowDefinition Height="Auto"/>
@@ -27,11 +67,12 @@
                         <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-                <Border CornerRadius="8"
-                        Background="#AA1E1E1E"
+                <Border CornerRadius="12"
+                        Background="{DynamicResource CardBgBrush}"
                         ClipToBounds="True">
                         <Grid>
                                 <Image x:Name="CardImage"
+                                       Visibility="Collapsed"
                                        RenderTransformOrigin="0.5,0.5">
                                         <Image.RenderTransform>
                                                 <TransformGroup>
@@ -42,64 +83,129 @@
                                                 </TransformGroup>
                                         </Image.RenderTransform>
                                 </Image>
+                                <MediaElement x:Name="CardVideo"
+                                              Visibility="Collapsed"
+                                              LoadedBehavior="Manual"
+                                              UnloadedBehavior="Stop"
+                                              Stretch="Uniform"/>
+                                <wv2:WebView2 x:Name="CardPdf"
+                                              Visibility="Collapsed"/>
+                                <ScrollViewer x:Name="CardTextContainer"
+                                              Visibility="Collapsed"
+                                              VerticalScrollBarVisibility="Auto"
+                                              HorizontalScrollBarVisibility="Disabled"
+                                              Margin="10">
+                                        <TextBlock x:Name="CardText"
+                                                   Foreground="{DynamicResource PrimaryTextBrush}"
+                                                   FontSize="14"
+                                                   TextWrapping="Wrap"/>
+                                </ScrollViewer>
                         </Grid>
                 </Border>
 
-                <TextBlock x:Name="StatusText"
-                           Grid.Row="1"
-                           Foreground="#aaa"
-                           Margin="0,8"
-                           Text="Drop images, folders or lists here"
-                           FontSize="12"/>
+                <Grid Grid.Row="1"
+                      Margin="0,8,0,4">
+                        <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Name="StatusText"
+                                   Foreground="{DynamicResource SecondaryTextBrush}"
+                                   Margin="0,2,8,0"
+                                   Text="Drop media, folders or lists here"
+                                   FontSize="12"/>
+                        <Button x:Name="PauseButton"
+                                Grid.Column="1"
+                                Content="Pause"
+                                Width="74"
+                                Margin="0,0,6,0"
+                                Click="PauseButton_Click"/>
+                        <ComboBox x:Name="ThemeSelector"
+                                  Grid.Column="2"
+                                  Width="100"
+                                  SelectedIndex="0"
+                                  SelectionChanged="ThemeSelector_SelectionChanged">
+                                <ComboBoxItem Content="Black"/>
+                                <ComboBoxItem Content="Pink"/>
+                                <ComboBoxItem Content="Neon"/>
+                        </ComboBox>
+                </Grid>
 
                 <Border Grid.Row="2"
-                        CornerRadius="8"
-                        Background="#202020"
-                        BorderBrush="#333"
+                        CornerRadius="12"
+                        Background="{DynamicResource PanelBgBrush}"
+                        BorderBrush="{DynamicResource PanelBorderBrush}"
                         BorderThickness="1">
 
                         <ListBox x:Name="Playlist"
                                  Background="Transparent"
                                  BorderThickness="0"
-                                 Foreground="#ddd"
+                                 Foreground="{DynamicResource PrimaryTextBrush}"
                                  SelectionChanged="Playlist_SelectionChanged"
-                                 DisplayMemberPath="Name"/>
+                                 ScrollViewer.CanContentScroll="True"
+                                 VirtualizingPanel.IsVirtualizing="True"
+                                 VirtualizingPanel.VirtualizationMode="Recycling">
+                                <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                                <Grid Margin="2">
+                                                        <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="42"/>
+                                                                <ColumnDefinition Width="*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Border Width="36"
+                                                                Height="36"
+                                                                CornerRadius="6"
+                                                                Background="{DynamicResource ButtonBgBrush}"
+                                                                BorderBrush="{DynamicResource ButtonBorderBrush}"
+                                                                BorderThickness="1">
+                                                                <Image Source="{Binding ThumbnailPath}"
+                                                                       Stretch="UniformToFill"/>
+                                                        </Border>
+                                                        <StackPanel Grid.Column="1"
+                                                                    Margin="8,0,0,0">
+                                                                <TextBlock Text="{Binding DisplayLabel}"
+                                                                           Foreground="{DynamicResource PrimaryTextBrush}"
+                                                                           FontWeight="SemiBold"
+                                                                           TextTrimming="CharacterEllipsis"/>
+                                                                <TextBlock Text="{Binding Kind}"
+                                                                           Foreground="{DynamicResource SecondaryTextBrush}"
+                                                                           FontSize="11"/>
+                                                        </StackPanel>
+                                                </Grid>
+                                        </DataTemplate>
+                                </ListBox.ItemTemplate>
+                        </ListBox>
                 </Border>
 
-                <StackPanel Grid.Row="3"
-                            Orientation="Horizontal"
-                            Margin="0,8,0,0">
+                <UniformGrid Grid.Row="3"
+                             Margin="0,8,0,0"
+                             Columns="5">
                         <Button Content="Load list"
-                                MinWidth="78"
-                                Margin="0,0,5,0"
                                 Click="LoadList_Click"/>
                         <Button Content="Update"
-                                MinWidth="78"
-                                Margin="0,0,5,0"
                                 Click="UpdateItem_Click"/>
                         <Button Content="Delete"
-                                MinWidth="78"
-                                Margin="0,0,5,0"
                                 Click="DeleteItem_Click"/>
                         <Button Content="Folder"
-                                MinWidth="78"
                                 Click="OpenFolder_Click"/>
-                </StackPanel>
+                        <Button Content="Open"
+                                Click="OpenCurrent_Click"/>
+                </UniformGrid>
 
-                <StackPanel Grid.Row="4"
-                            Orientation="Horizontal"
-                            Margin="0,8,0,0">
+                <UniformGrid Grid.Row="4"
+                             Margin="0,8,0,0"
+                             Columns="5">
                         <Button Content="Again"
-                                Width="80"
-                                Margin="0,0,5,0"
                                 Click="Again_Click"/>
                         <Button Content="Good"
-                                Width="80"
-                                Margin="0,0,5,0"
                                 Click="Good_Click"/>
                         <Button Content="Easy"
-                                Width="80"
                                 Click="Easy_Click"/>
-                </StackPanel>
+                        <Button Content="AI Init"
+                                Click="AiInit_Click"/>
+                        <Button Content="AI Analyze"
+                                Click="AiAnalyze_Click"/>
+                </UniformGrid>
         </Grid>
 </Window>
