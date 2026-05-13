@@ -1,0 +1,29 @@
+﻿{
+  "manifest_version": 3,
+  "name": "Webpage Stabilizer",
+  "version": "0.1",
+  "description": "Detects listeners, timers and provides a panic button.",
+  "permissions": [
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "16.png",
+    "48": "48.png",
+    "128": "128.png"
+  }
+}

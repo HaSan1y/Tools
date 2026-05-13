@@ -21,23 +21,24 @@ chrome.runtime.onMessage.addListener((msg) => {
 async function checkAllPages() {
     const data = await chrome.storage.local.get("pages");
     const pages = data.pages || [];
+    let changed = false;
 
     for (let page of pages) {
         try {
             const response = await fetch(page.url);
-            const text = await response.text();
+            const html = await response.text();
 
-            let content = text;
-
-            // 🔥 Selector Mode (ohne DOMParser)
+            let content = html;
             if (page.selector) {
-                content = extractBySelector(text, page.selector);
+                content = extractBySelector(html, page.selector);
             }
 
-            const hash = await hashText(content);
+            const normalized = normalizeContent(content);
+            const hash = await hashText(normalized);
 
             if (page.lastHash && page.lastHash !== hash) {
                 notifyChange(page.url);
+                changed = true;
             }
 
             page.lastHash = hash;
@@ -47,42 +48,40 @@ async function checkAllPages() {
         }
     }
 
-    await chrome.storage.local.set({ pages });
+    if (changed) {
+        await chrome.storage.local.set({ pages });
+    }
 }
 
-// 🧠 einfacher Selector Ersatz (MVP)
 function extractBySelector(html, selector) {
     try {
-        // sehr simpel: sucht nach id oder class
-        if (selector.startsWith("#")) {
-            const id = selector.replace("#", "");
-            const regex = new RegExp(`<[^>]*id=["']${id}["'][^>]*>(.*?)</[^>]+>`, "s");
-            const match = html.match(regex);
-            return match ? match[1] : html;
-        }
-
-        if (selector.startsWith(".")) {
-            const cls = selector.replace(".", "");
-            const regex = new RegExp(`<[^>]*class=["'][^"']*${cls}[^"']*["'][^>]*>(.*?)</[^>]+>`, "s");
-            const match = html.match(regex);
-            return match ? match[1] : html;
-        }
-
-        return html;
-
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, "text/html");
+        const element = doc.querySelector(selector);
+        return element ? element.innerHTML : html;
     } catch (e) {
         return html;
     }
 }
 
+function normalizeContent(content) {
+    return content.replace(/\s+/g, " ").trim();
+}
+
 function notifyChange(url) {
-    chrome.notifications.create({
+    chrome.notifications.create(url, {
         type: "basic",
         iconUrl: "icons/16x16.png",
         title: "Change detected!",
         message: url
     });
 }
+
+chrome.notifications.onClicked.addListener((notificationId) => {
+    if (notificationId.startsWith("http://") || notificationId.startsWith("https://")) {
+        chrome.tabs.create({ url: notificationId });
+    }
+});
 
 async function hashText(text) {
     const encoder = new TextEncoder();

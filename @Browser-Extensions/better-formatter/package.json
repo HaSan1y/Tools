@@ -1,0 +1,30 @@
+{
+  "name": "better-formatter",
+  "displayName": "Better Formatter",
+  "description": "Prettier but less annoying.",
+  "version": "0.0.1",
+  "publisher": "you",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript",
+    "onLanguage:json"
+  ],
+  "main": "./extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "javascript",
+        "extensions": [".js"]
+      },
+      {
+        "id": "json",
+        "extensions": [".json"]
+      }
+    ]
+  }
+}

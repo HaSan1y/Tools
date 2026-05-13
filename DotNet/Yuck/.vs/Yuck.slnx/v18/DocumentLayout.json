@@ -14,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
@@ -29,6 +29,10 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
               "DocumentIndex": 0,
               "Title": "Yuck.csproj",
@@ -36,7 +40,7 @@
               "RelativeDocumentMoniker": "Yuck.csproj",
               "ToolTip": "H:\\codeing\\html\u002Bjavascript\\\u002Bgit\u002Bgithub\u002Bdocker\\git\\github-desktop\\\u002BTools\\DotNet\\Yuck\\Yuck.csproj",
               "RelativeToolTip": "Yuck.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAIwA8AAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
               "WhenOpened": "2026-05-05T16:02:48.623Z",
               "EditorCaption": ""
