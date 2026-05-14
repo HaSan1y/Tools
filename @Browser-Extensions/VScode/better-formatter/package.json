@@ -1,0 +1,93 @@
+{
+  "name": "better-formatter",
+  "displayName": "Better Formatter",
+  "description": "\"Format only ugly parts\" – minimal formatter that respects your style. Fixes trailing spaces, compacts simple arrays, normalises blank lines. No AST rewrite.",
+  "version": "0.1.0",
+  "publisher": "hasan",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Formatters"
+  ],
+  "activationEvents": [],
+  "main": "./out/extension.js",
+  "contributes": {
+    "configuration": {
+      "title": "Better Formatter",
+      "properties": {
+        "better-formatter.compactArrays": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Collapse simple multi-line arrays to a single line when they fit in 80 characters.\n\n`[\\n  \"a\",\\n  \"b\"\\n]` → `[\"a\", \"b\"]`"
+        },
+        "better-formatter.fixTrailingWhitespace": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Remove trailing whitespace from every line."
+        },
+        "better-formatter.maxBlankLines": {
+          "type": "integer",
+          "default": 2,
+          "minimum": 0,
+          "markdownDescription": "Maximum consecutive blank lines allowed. Set to `0` to allow no blank lines, `1` for single blank lines, etc."
+        },
+        "better-formatter.fixSameLineBraces": {
+          "type": "boolean",
+          "default": true,
+          "markdownDescription": "Move `{` to the same line as the preceding `)` – turns `)\\n{` into `) {`."
+        }
+      }
+    },
+    "languages": [
+      {
+        "id": "javascript",
+        "extensions": [
+          ".js",
+          ".mjs",
+          ".cjs"
+        ],
+        "aliases": [
+          "JavaScript",
+          "JS"
+        ]
+      },
+      {
+        "id": "json",
+        "extensions": [
+          ".json",
+          ".jsonc"
+        ],
+        "aliases": [
+          "JSON"
+        ]
+      }
+    ],
+    "commands": [
+      {
+        "command": "better-formatter.fixSelection",
+        "title": "Better Formatter: Fix Selection",
+        "description": "Format the current line/selection with minimal fixes (compact arrays, trailing spaces, …). Use after Prettier."
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "better-formatter.fixSelection",
+        "key": "alt+b",
+        "when": "editorTextFocus && editorLangId =~ /javascript|json/"
+      }
+    ]
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "formatter",
+    "minimal",
+    "prettier-alternative",
+    "compact",
+    "beautify"
+  ],
+  "author": "",
+  "license": "ISC"
+}

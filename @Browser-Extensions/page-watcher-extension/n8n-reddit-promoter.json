@@ -1,0 +1,365 @@
+{
+  "name": "Page Watcher - Reddit Promoter",
+  "nodes": [
+    {
+      "id": "schedule-trigger",
+      "name": "Every 4 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1,
+      "position": [0, 400],
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 4
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "reddit-search",
+      "name": "Search Reddit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [260, 400],
+      "parameters": {
+        "method": "GET",
+        "url": "https://www.reddit.com/search.json",
+        "authentication": "none",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "q",
+              "value": "(webpage change detection) OR (page monitor tool) OR (website change alert) OR (browser extension monitor) OR (watch webpage for changes)"
+            },
+            {
+              "name": "sort",
+              "value": "new"
+            },
+            {
+              "name": "t",
+              "value": "week"
+            },
+            {
+              "name": "limit",
+              "value": "25"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "parameters": [
+              {
+                "name": "User-Agent",
+                "value": "PageWatcherBot/1.0 (by u/your_username)"
+              }
+            ]
+          },
+          "response": {
+            "response": {
+              "fullResponse": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "id": "pick-post",
+      "name": "Pick Best Post",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [520, 400],
+      "parameters": {
+        "language": "javascript",
+        "code": "const items = $input.all();\nconst data = items[0].json;\nconst children = data?.data?.children || [];\n\nif (children.length === 0) {\n  return [{ json: { found: false, reason: 'no results' } }];\n}\n\n// Filter out stickied, removed, and already-processed posts\nconst processed = $workflow.staticData.processed || {};\nconst valid = children.filter(p => {\n  const d = p.data;\n  if (d.stickied || d.removed || d.over_18) return false;\n  if (processed[d.id]) return false;\n  return true;\n});\n\nif (valid.length === 0) {\n  // Mark as done anyway to avoid re-processing stale results\n  return [{ json: { found: false, reason: 'all processed' } }];\n}\n\n// Score: engagements + recency bonus\nconst best = valid.sort((a, b) => {\n  const scoreA = a.data.ups + a.data.num_comments;\n  const scoreB = b.data.ups + b.data.num_comments;\n  return scoreB - scoreA;\n})[0];\n\n// Mark as processed\nprocessed[best.data.id] = true;\n$workflow.staticData.processed = processed;\n\nreturn [{\n  json: {\n    found: true,\n    postId: best.data.id,\n    title: best.data.title,\n    selftext: (best.data.selftext || '').substring(0, 1000),\n    permalink: 'https://reddit.com' + best.data.permalink,\n    subreddit: best.data.subreddit,\n    author: best.data.author,\n    ups: best.data.ups,\n    numComments: best.data.num_comments,\n    createdUTC: best.data.created_utc\n  }\n}];"
+      }
+    },
+    {
+      "id": "post-found",
+      "name": "Post Found?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1.1,
+      "position": [780, 400],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "0c7946c8-a350-480f-8b2b-041e224dfdba",
+              "leftValue": "={{ $json.found }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "lm-studio",
+      "name": "Generate Reply (LM Studio)",
+      "type": "n8n-nodes-base.openAi",
+      "typeVersion": 3,
+      "position": [1040, 300],
+      "parameters": {
+        "options": {
+          "baseURL": "http://host.docker.internal:1234/v1"
+        },
+        "model": "qwen3.5-9b-uncensored-hauhaucs-aggressive",
+        "messages": {
+          "values": [
+            {
+              "role": "system",
+              "content": "You are helping promote 'Page Watcher', a free Chrome extension that monitors webpages for changes and sends notifications. Your job: find relevant Reddit posts where someone might genuinely benefit from this tool, and write a helpful, natural reply.\n\nRules:\n- Be genuinely helpful first. Suggest Page Watcher only when it fits naturally.\n- Never sound like spam or an ad.\n- Don't mention you're promoting anything.\n- Keep replies concise and conversational.\n- If the post asks about a tool that monitors webpages, track changes, or get notified of updates — that's your moment.\n\nAbout the extension:\n- Name: Page Watcher\n- Free Chrome extension\n- Monitors webpages for changes and sends Chrome notifications\n- Supports CSS selectors for watching specific page sections\n- Open-source"
+            },
+            {
+              "role": "user",
+              "content": "Reddit Post Title: {{ $node['Pick Best Post'].json.title }}\nPost Content: {{ $node['Pick Best Post'].json.selftext }}\n\nWrite a natural, helpful reply. If Page Watcher is relevant, mention it. Otherwise just be helpful."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "credentials": {
+        "openAiApi": "LM Studio Local"
+      }
+    },
+    {
+      "id": "build-email",
+      "name": "Build Approval Email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1300, 300],
+      "parameters": {
+        "language": "javascript",
+        "code": "const post = $node['Pick Best Post'].json;\nconst reply = $node['Generate Reply (LM Studio)'].json;\n\n// Get the reply text\nlet replyText = '';\nif (reply.choices && reply.choices[0]?.message?.content) {\n  replyText = reply.choices[0].message.content;\n} else if (reply.output) {\n  replyText = reply.output;\n} else {\n  replyText = JSON.stringify(reply).substring(0, 500);\n}\n\n// Build approval URLs using base webhook URL\nconst baseUrl = 'https://YOUR-NGROK-URL.ngrok-free.app';\nconst executionId = $execution.id;\nconst approveUrl = `${baseUrl}/webhook/waiting/${executionId}?action=approve`;\nconst rejectUrl = `${baseUrl}/webhook/waiting/${executionId}?action=reject`;\n\nreturn [{\n  json: {\n    approveUrl,\n    rejectUrl,\n    postTitle: post.title,\n    postUrl: post.permalink,\n    subreddit: post.subreddit,\n    replyText,\n    executionId\n  }\n}];"
+      }
+    },
+    {
+      "id": "send-email",
+      "name": "Send Approval Email",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 1,
+      "position": [1560, 300],
+      "parameters": {
+        "fromEmail": "YOUR-EMAIL@gmail.com",
+        "toEmail": "YOUR-EMAIL@gmail.com",
+        "subject": "=Approve Reply? r/{{ $node['Pick Best Post'].json.subreddit }} - {{ $node['Pick Best Post'].json.title }}",
+        "text": "=Reddit Post: {{ $node['Pick Best Post'].json.permalink }}\n\nAI-Generated Reply:\n{{ $json.replyText }}\n\n---\nApprove: {{ $json.approveUrl }}\nReject: {{ $json.rejectUrl }}",
+        "options": {}
+      }
+    },
+    {
+      "id": "wait-webhook",
+      "name": "Wait for Approval",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1,
+      "position": [1820, 300],
+      "parameters": {
+        "resume": "webhook",
+        "options": {
+          "webhookSuffix": "waiting",
+          "webhookMethod": "GET"
+        }
+      }
+    },
+    {
+      "id": "check-action",
+      "name": "Approved?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 1.1,
+      "position": [2080, 300],
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "ac05bf91-6a88-42fe-9585-ca140f400656",
+              "leftValue": "={{ $json.query?.action }}",
+              "rightValue": "approve",
+              "operator": {
+                "type": "string",
+                "operation": "equal"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "post-reply",
+      "name": "Post Reply to Reddit",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2340, 200],
+      "parameters": {
+        "method": "POST",
+        "url": "https://oauth.reddit.com/api/comment",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "oAuth2Api",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "api_type",
+              "value": "json"
+            },
+            {
+              "name": "thing_id",
+              "value": "={{ 't3_' + $node['Pick Best Post'].json.postId }}"
+            },
+            {
+              "name": "text",
+              "value": "={{ $node['Build Approval Email'].json.replyText }}"
+            }
+          ]
+        },
+        "options": {
+          "headers": {
+            "parameters": [
+              {
+                "name": "User-Agent",
+                "value": "PageWatcherBot/1.0 (by u/your_username)"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "skip-post",
+      "name": "Skip (Rejected)",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [2340, 400],
+      "parameters": {}
+    }
+  ],
+  "connections": {
+    "Every 4 Hours": {
+      "main": [
+        [
+          {
+            "node": "Search Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Search Reddit": {
+      "main": [
+        [
+          {
+            "node": "Pick Best Post",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Best Post": {
+      "main": [
+        [
+          {
+            "node": "Post Found?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Post Found?": {
+      "main": [
+        [
+          {
+            "node": "Generate Reply (LM Studio)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Generate Reply (LM Studio)": {
+      "main": [
+        [
+          {
+            "node": "Build Approval Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Build Approval Email": {
+      "main": [
+        [
+          {
+            "node": "Send Approval Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Approval Email": {
+      "main": [
+        [
+          {
+            "node": "Wait for Approval",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait for Approval": {
+      "main": [
+        [
+          {
+            "node": "Approved?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Approved?": {
+      "main": [
+        [
+          {
+            "node": "Post Reply to Reddit",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Skip (Rejected)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "timezone": "Europe/Berlin",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "staticData": null,
+  "tags": [],
+  "pinData": {}
+}
